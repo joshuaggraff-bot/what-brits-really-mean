@@ -2204,15 +2204,21 @@ function downloadScreenshot() {
   URL.revokeObjectURL(url);
 }
 
-function getPlatformUrl(platform) {
-  const siteUrl = encodeURIComponent('https://joshuaggraff-bot.github.io/what-brits-really-mean/');
-  const text = encodeURIComponent('I just translated what a British person said into what they actually meant 😂 Try it yourself:');
-  switch (platform) {
-    case 'linkedin': return `https://www.linkedin.com/sharing/share-offsite/?url=${siteUrl}`;
-    case 'facebook': return `https://www.facebook.com/sharer/sharer.php?u=${siteUrl}`;
-    case 'whatsapp': return `https://wa.me/?text=${text}%20${siteUrl}`;
-    case 'x': return `https://x.com/intent/tweet?url=${siteUrl}&text=${text}`;
-    default: return null;
+const platformUrls = {
+  linkedin: 'https://www.linkedin.com/feed/',
+  facebook: 'https://www.facebook.com/',
+  whatsapp: 'https://web.whatsapp.com/',
+  x: 'https://x.com/home'
+};
+
+async function copyImageToClipboard(blob) {
+  try {
+    await navigator.clipboard.write([
+      new ClipboardItem({ 'image/png': blob })
+    ]);
+    return true;
+  } catch (e) {
+    return false;
   }
 }
 
@@ -2237,10 +2243,10 @@ dropdown.addEventListener('click', async (e) => {
     return;
   }
 
-  // Desktop: download image then open platform share page
+  // Desktop: copy image to clipboard, download as backup, then open platform
+  const copied = await copyImageToClipboard(screenshotBlob);
   downloadScreenshot();
-  const url = getPlatformUrl(platform);
-  if (url) window.open(url, '_blank', 'noopener');
+  window.open(platformUrls[platform], '_blank', 'noopener');
 });
 </script>
 
