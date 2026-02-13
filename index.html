@@ -2204,12 +2204,17 @@ function downloadScreenshot() {
   URL.revokeObjectURL(url);
 }
 
-const platformUrls = {
-  linkedin: 'https://www.linkedin.com/feed/?shareActive=true',
-  facebook: 'https://www.facebook.com/',
-  x: 'https://x.com/compose/post',
-  whatsapp: null
-};
+function getPlatformUrl(platform) {
+  const siteUrl = encodeURIComponent('https://joshuaggraff-bot.github.io/what-brits-really-mean/');
+  const text = encodeURIComponent('I just translated what a British person said into what they actually meant 😂 Try it yourself:');
+  switch (platform) {
+    case 'linkedin': return `https://www.linkedin.com/sharing/share-offsite/?url=${siteUrl}`;
+    case 'facebook': return `https://www.facebook.com/sharer/sharer.php?u=${siteUrl}`;
+    case 'whatsapp': return `https://wa.me/?text=${text}%20${siteUrl}`;
+    case 'x': return `https://x.com/intent/tweet?url=${siteUrl}&text=${text}`;
+    default: return null;
+  }
+}
 
 dropdown.addEventListener('click', async (e) => {
   const btn = e.target.closest('.sd-btn');
@@ -2223,7 +2228,7 @@ dropdown.addEventListener('click', async (e) => {
     return;
   }
 
-  // Try native share for WhatsApp (and any platform on mobile)
+  // Mobile: use Web Share API to share image directly
   const file = new File([screenshotBlob], 'british-translation.png', { type: 'image/png' });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try {
@@ -2232,9 +2237,9 @@ dropdown.addEventListener('click', async (e) => {
     return;
   }
 
-  // Desktop fallback: download image + open platform compose page
+  // Desktop: download image then open platform share page
   downloadScreenshot();
-  const url = platformUrls[platform];
+  const url = getPlatformUrl(platform);
   if (url) window.open(url, '_blank', 'noopener');
 });
 </script>
