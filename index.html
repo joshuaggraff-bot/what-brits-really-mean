@@ -502,6 +502,154 @@
 
   .share-btn.copy-link.copied { background: #16a34a; }
 
+  .share-btn.share-image { background: var(--red); }
+  .share-btn.share-image:hover { opacity: 0.85; }
+
+  /* Share Card (off-screen for html2canvas capture) */
+  #shareCard {
+    position: fixed;
+    left: -9999px;
+    top: 0;
+    width: 1080px;
+    height: 1350px;
+    background: #faf6f0;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  .sc-stripe {
+    height: 12px;
+    background: linear-gradient(90deg, #1b2a4a 33%, transparent 33%, transparent 40%, #c8102e 40%, #c8102e 60%, transparent 60%, transparent 67%, #1b2a4a 67%);
+  }
+
+  .sc-body {
+    padding: 60px 72px;
+    display: flex;
+    flex-direction: column;
+    height: calc(1350px - 12px);
+  }
+
+  .sc-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .sc-teacup {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .sc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: #1b2a4a;
+  }
+
+  .sc-accent { color: #c8102e; }
+
+  .sc-said-box, .sc-meant-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    border: 2px solid #e5e1da;
+  }
+
+  .sc-meant-box {
+    border-color: #c8102e;
+  }
+
+  .sc-label {
+    font-size: 22px;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 14px;
+  }
+
+  .sc-said-text {
+    font-size: 32px;
+    color: #1b2a4a;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .sc-meant-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: #1b2a4a;
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  .sc-meter {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .sc-meter-label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #6b7280;
+    white-space: nowrap;
+  }
+
+  .sc-meter-track {
+    flex: 1;
+    height: 24px;
+    background: #e5e1da;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .sc-meter-fill {
+    height: 100%;
+    border-radius: 12px;
+    transition: none;
+  }
+
+  .sc-meter-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1b2a4a;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  .sc-tip {
+    background: rgba(212, 168, 67, 0.12);
+    border-radius: 16px;
+    padding: 24px 28px;
+    font-size: 22px;
+    color: #7a6220;
+    line-height: 1.5;
+    margin-bottom: auto;
+  }
+
+  .sc-tip strong { font-weight: 700; }
+
+  .sc-footer {
+    text-align: center;
+    padding-top: 32px;
+    border-top: 2px solid #e5e1da;
+  }
+
+  .sc-url {
+    font-size: 22px;
+    color: #6b7280;
+    margin-bottom: 6px;
+  }
+
+  .sc-cta {
+    font-size: 26px;
+    font-weight: 700;
+    color: #c8102e;
+  }
+
   /* Footer */
   footer {
     text-align: center;
@@ -606,6 +754,10 @@
   <div class="share-section">
     <div class="share-label">Share this with someone who needs it</div>
     <div class="share-buttons">
+      <button class="share-btn share-image" id="shareImage">
+        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+        <span id="shareImageText">Share as Image</span>
+      </button>
       <a class="share-btn linkedin" id="shareLinkedIn" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
@@ -634,8 +786,40 @@
     (They were, but they said it was "absolutely fine".)</p>
     <p class="footer-seo">A free tool for decoding <strong>British English phrases</strong>, understatement, and politeness. Works with any sentence.</p>
   </footer>
+
+  <!-- Share Card (off-screen, captured by html2canvas) -->
+  <div id="shareCard">
+    <div class="sc-stripe"></div>
+    <div class="sc-body">
+      <div class="sc-header">
+        <span class="sc-teacup">&#9749;</span>
+        <div class="sc-title">What <span class="sc-accent">Brits</span> Really Mean</div>
+      </div>
+      <div class="sc-said-box">
+        <div class="sc-label">&#127468;&#127463; What they said</div>
+        <div class="sc-said-text" id="scSaidText"></div>
+      </div>
+      <div class="sc-meant-box">
+        <div class="sc-label">&#128161; What they actually meant</div>
+        <div class="sc-meant-text" id="scMeantText"></div>
+      </div>
+      <div class="sc-meter">
+        <div class="sc-meter-label">Politeness Disguise</div>
+        <div class="sc-meter-track">
+          <div class="sc-meter-fill" id="scMeterFill"></div>
+        </div>
+        <div class="sc-meter-value" id="scMeterValue"></div>
+      </div>
+      <div class="sc-tip" id="scTip"></div>
+      <div class="sc-footer">
+        <div class="sc-url">joshuaggraff-bot.github.io/what-brits-really-mean</div>
+        <div class="sc-cta">Try it yourself &#8594;</div>
+      </div>
+    </div>
+  </div>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 // =====================================================================
 // THE BRITISH TRANSLATOR ENGINE v2.0
@@ -1859,6 +2043,108 @@ document.getElementById('copyLink').addEventListener('click', () => {
     txt.textContent = 'Copied!';
     setTimeout(() => { btn.classList.remove('copied'); txt.textContent = 'Copy Link'; }, 2000);
   });
+});
+
+// ── Share as Image ──
+function populateShareCard() {
+  const said = inputEl.value.trim();
+  const meant = translationText.textContent;
+  if (!said || !meant) return false;
+
+  document.getElementById('scSaidText').textContent = said;
+  document.getElementById('scMeantText').textContent = meant;
+
+  // Copy meter state
+  const scFill = document.getElementById('scMeterFill');
+  scFill.style.width = meterFill.style.width;
+  scFill.style.background = meterFill.style.background;
+  document.getElementById('scMeterValue').textContent = meterValue.textContent;
+
+  // Copy tip
+  document.getElementById('scTip').innerHTML = tipEl.innerHTML;
+
+  return true;
+}
+
+document.getElementById('shareImage').addEventListener('click', async () => {
+  const btn = document.getElementById('shareImage');
+  const txt = document.getElementById('shareImageText');
+
+  // Check if there's a translation to share
+  if (!resultSection.classList.contains('visible')) {
+    txt.textContent = 'Translate first!';
+    setTimeout(() => { txt.textContent = 'Share as Image'; }, 2000);
+    return;
+  }
+
+  if (!populateShareCard()) {
+    txt.textContent = 'Translate first!';
+    setTimeout(() => { txt.textContent = 'Share as Image'; }, 2000);
+    return;
+  }
+
+  txt.textContent = 'Generating...';
+  btn.disabled = true;
+
+  try {
+    const card = document.getElementById('shareCard');
+    const canvas = await html2canvas(card, {
+      width: 1080,
+      height: 1350,
+      scale: 1,
+      useCORS: true,
+      backgroundColor: '#faf6f0'
+    });
+
+    canvas.toBlob(async (blob) => {
+      if (!blob) {
+        txt.textContent = 'Error!';
+        btn.disabled = false;
+        setTimeout(() => { txt.textContent = 'Share as Image'; }, 2000);
+        return;
+      }
+
+      const file = new File([blob], 'british-translation.png', { type: 'image/png' });
+
+      // Mobile: use Web Share API if available
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'What Brits Really Mean',
+            text: 'Check out this British translation!'
+          });
+          txt.textContent = 'Shared!';
+        } catch (e) {
+          // User cancelled share — not an error
+          if (e.name !== 'AbortError') {
+            txt.textContent = 'Error!';
+          } else {
+            txt.textContent = 'Share as Image';
+          }
+        }
+      } else {
+        // Desktop: download the image
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'british-translation.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        txt.textContent = 'Downloaded!';
+      }
+
+      btn.disabled = false;
+      setTimeout(() => { txt.textContent = 'Share as Image'; }, 2500);
+    }, 'image/png');
+  } catch (e) {
+    console.error('Share image error:', e);
+    txt.textContent = 'Error!';
+    btn.disabled = false;
+    setTimeout(() => { txt.textContent = 'Share as Image'; }, 2000);
+  }
 });
 </script>
 
