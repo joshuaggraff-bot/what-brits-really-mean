@@ -547,6 +547,29 @@
   .sd-btn:hover { opacity: 0.85; }
   .sd-btn svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
 
+  .screenshot-toast {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 101;
+    animation: toastFade 3s ease forwards;
+  }
+  .screenshot-toast.visible { display: block; }
+  @keyframes toastFade {
+    0%, 70% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
   .sd-linkedin { background: #0A66C2; }
   .sd-facebook { background: #1877F2; }
   .sd-whatsapp { background: #25D366; }
@@ -789,6 +812,7 @@
           Download
         </button>
       </div>
+      <div class="screenshot-toast" id="screenshotToast"></div>
     </div>
   </div>
 
@@ -2222,6 +2246,16 @@ async function copyImageToClipboard(blob) {
   }
 }
 
+const toast = document.getElementById('screenshotToast');
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.remove('visible');
+  void toast.offsetWidth;
+  toast.classList.add('visible');
+  setTimeout(() => { toast.classList.remove('visible'); }, 3000);
+}
+
 dropdown.addEventListener('click', (e) => {
   const btn = e.target.closest('.sd-btn');
   if (!btn || !screenshotBlob) return;
@@ -2234,12 +2268,23 @@ dropdown.addEventListener('click', (e) => {
     return;
   }
 
-  // Open platform immediately (synchronous — won't be blocked by popup blocker)
-  window.open(platformUrls[platform], '_blank', 'noopener');
+  // Mobile: try Web Share API for direct file sharing
+  const file = new File([screenshotBlob], 'british-translation.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    navigator.share({ files: [file], title: 'What Brits Really Mean' }).catch(() => {});
+    return;
+  }
 
-  // Then download image and copy to clipboard in background
-  downloadScreenshot();
-  copyImageToClipboard(screenshotBlob);
+  // Desktop: open platform immediately, then copy image + show toast
+  window.open(platformUrls[platform], '_blank', 'noopener');
+  copyImageToClipboard(screenshotBlob).then(ok => {
+    if (ok) {
+      showToast('Image copied — paste it into your post (Ctrl+V)');
+    } else {
+      downloadScreenshot();
+      showToast('Image downloaded — upload it to your post');
+    }
+  });
 });
 </script>
 
