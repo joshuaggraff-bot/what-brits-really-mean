@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Brits Really Mean</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #1b2a4a;
+    --cream: #faf6f0;
+    --red: #c8102e;
+    --gold: #d4a843;
+    --muted: #6b7280;
+    --light-border: #e5e1da;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Decorative top stripe */
+  .stripe {
+    height: 6px;
+    background: linear-gradient(90deg, var(--navy) 33%, transparent 33%, transparent 40%, var(--red) 40%, var(--red) 60%, transparent 60%, transparent 67%, var(--navy) 67%);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .teacup {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    animation: steam 3s ease-in-out infinite;
+  }
+
+  @keyframes steam {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 .accent { color: var(--red); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-weight: 400;
+    max-width: 460px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Input area */
+  .input-section {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+    border: 1px solid var(--light-border);
+    margin-bottom: 1.5rem;
+  }
+
+  .input-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .input-label .flag { font-size: 1rem; }
+
+  textarea {
+    width: 100%;
+    min-height: 100px;
+    border: 2px solid var(--light-border);
+    border-radius: 10px;
+    padding: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: border-color 0.2s;
+    color: var(--navy);
+    background: var(--cream);
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--navy);
+  }
+
+  textarea::placeholder { color: #b0a99f; }
+
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-translate {
+    flex: 1;
+    background: var(--navy);
+    color: white;
+  }
+
+  .btn-translate:hover { background: #253a64; transform: translateY(-1px); }
+  .btn-translate:active { transform: translateY(0); }
+
+  .btn-surprise {
+    background: transparent;
+    color: var(--navy);
+    border: 2px solid var(--light-border);
+    white-space: nowrap;
+  }
+
+  .btn-surprise:hover { border-color: var(--navy); background: rgba(27,42,74,0.04); }
+
+  /* Result area */
+  .result-section {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+    border: 1px solid var(--light-border);
+    display: none;
+    animation: slideUp 0.4s ease;
+  }
+
+  .result-section.visible { display: block; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .translation-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .politeness-meter {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--light-border);
+  }
+
+  .meter-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .meter-bar {
+    flex: 1;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease, background 0.4s;
+  }
+
+  .meter-value {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    min-width: 2.5rem;
+    text-align: right;
+  }
+
+  /* Tip section */
+  .tip {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    background: rgba(212, 168, 67, 0.1);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: #7a6220;
+    line-height: 1.5;
+  }
+
+  .tip strong { font-weight: 600; }
+
+  /* Examples strip */
+  .examples {
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  .examples-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .example-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .chip {
+    background: white;
+    border: 1px solid var(--light-border);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--navy);
+  }
+
+  .chip:hover {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: white;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  /* Responsive */
+  @media (max-width: 520px) {
+    h1 { font-size: 2rem; }
+    .container { padding: 1.5rem 1rem 3rem; }
+    .btn-row { flex-direction: column; }
+    .translation-text { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stripe"></div>
+
+<div class="container">
+  <header>
+    <div class="teacup">&#9749;</div>
+    <h1>What <span class="accent">Brits</span> Really Mean</h1>
+    <p class="subtitle">Type what the British person said and discover what they <em>actually</em> meant.</p>
+  </header>
+
+  <div class="input-section">
+    <div class="input-label">
+      <span class="flag">&#127468;&#127463;</span> What they said
+    </div>
+    <textarea id="input" placeholder="e.g. &quot;That's a very brave decision&quot;"></textarea>
+    <div class="btn-row">
+      <button class="btn-translate" id="translateBtn">Translate to Actual Meaning</button>
+      <button class="btn-surprise" id="surpriseBtn">Surprise Me</button>
+    </div>
+  </div>
+
+  <div class="result-section" id="result">
+    <div class="result-label">&#128161; What they actually meant</div>
+    <div class="translation-text" id="translationText"></div>
+    <div class="politeness-meter">
+      <span class="meter-label">Politeness Disguise</span>
+      <div class="meter-bar"><div class="meter-fill" id="meterFill"></div></div>
+      <span class="meter-value" id="meterValue"></span>
+    </div>
+    <div class="tip" id="tip"></div>
+  </div>
+
+  <div class="examples">
+    <div class="examples-title">Try these</div>
+    <div class="example-chips" id="chips"></div>
+  </div>
+
+  <footer>
+    No British people were offended in the making of this translator.<br>
+    (They were, but they said it was "absolutely fine".)
+  </footer>
+</div>
+
+<script>
+// =====================================================================
+// THE BRITISH TRANSLATOR ENGINE v2.0
+// A three-layer system: exact phrases → contextual patterns → word analysis
+// =====================================================================
+
+// ── LAYER 1: Exact phrase database (longest match wins) ──
+const phrases = [
+  // ── Workplace & meetings ──
+  { p: ["i hear what you say", "i hear what you're saying"], t: "I completely disagree with you and I don't want to discuss it any further.", pol: 95, tip: "If a British person says this in a meeting, your idea is dead. Move on gracefully." },
+  { p: ["with all due respect", "with the greatest respect", "with the utmost respect"], t: "I think you're completely wrong.", pol: 92, tip: "The more 'respect' they claim to have, the less they actually do." },
+  { p: ["correct me if i'm wrong", "correct me if i am wrong"], t: "I am right, and I'm about to prove it. Do not actually attempt to correct me.", pol: 78, tip: "This is not an invitation for feedback. This is a warning." },
+  { p: ["i only have a few minor comments", "just a few minor comments", "a few minor suggestions", "a few small points", "just some minor feedback"], t: "I am going to completely rewrite everything you've done.", pol: 87, tip: "In British workplaces, 'minor' means 'fundamental and sweeping'." },
+  { p: ["could we consider some other options", "perhaps we could explore other avenues", "might there be another way", "have we thought about alternatives"], t: "I don't like your idea. At all. Please come up with a completely different one.", pol: 84, tip: "They've already considered the other options. They just need you to arrive at them independently." },
+  { p: ["i'll leave that with you", "i'll let you take that away"], t: "This is now entirely your problem. I want nothing more to do with it.", pol: 80, tip: "The British handoff. Once something has been 'left with you', they have mentally filed it under 'not my circus'." },
+  { p: ["as i'm sure you're aware", "as you're no doubt aware", "as i'm sure you know", "as you probably know"], t: "You clearly have absolutely no idea about this, and I'm about to embarrass you.", pol: 85, tip: "The more 'sure' they are that you're aware, the more sure they are that you're clueless." },
+  { p: ["per my last email", "as per my previous email", "as i mentioned in my email", "as previously mentioned", "as i said before"], t: "I already told you this. I need you to actually read what I send you.", pol: 75, tip: "This is the polite British version of 'READ. MY. EMAIL.' Each word is doing the work of a shout." },
+  { p: ["thanks in advance", "thanking you in advance"], t: "You have no choice in this matter. I'm thanking you now because I'm not going to thank you later.", pol: 70, tip: "Pre-emptive gratitude is a power move disguised as politeness." },
+  { p: ["just to clarify", "just to be clear", "just so we're on the same page"], t: "You got this completely wrong and I'm trying not to humiliate you while I correct you.", pol: 78, tip: "'Just to clarify' is doing the heavy lifting of 'you fundamentally misunderstood everything'." },
+  { p: ["going forward", "moving forward"], t: "Let's collectively pretend your previous mistakes didn't happen. I won't forget them, though.", pol: 68, tip: "'Going forward' is the British corporate reset button. It erases nothing but sounds like it does." },
+  { p: ["i trust this is helpful", "i hope this helps", "hope that helps"], t: "I have given you the answer. Take it or leave it. I'm done here.", pol: 65, tip: "The conversation is over. They are not hoping. They are closing." },
+  { p: ["noted", "duly noted"], t: "I have heard you, I have filed your opinion in the bin, and I will do exactly what I was going to do anyway.", pol: 60, tip: "'Noted' is the British full stop. It acknowledges receipt of your words while discarding their content." },
+  { p: ["we need to have a chat", "could i have a word", "can i have a word", "can we have a chat", "a quick word", "could we have a quick chat"], t: "You are in very serious trouble.", pol: 75, tip: "The more casual the phrasing, the worse the situation. 'A quick word' is especially ominous." },
+  { p: ["that's an interesting approach", "that's one approach", "that's certainly one way to do it", "that's one way to do it", "well, that's one approach", "that's a novel approach"], t: "That is the wrong way to do it. There is a better way, and you should have found it.", pol: 83, tip: "When a British person highlights that something is 'one way' or 'an approach', they're implying a much better one exists." },
+  { p: ["i was just thinking", "i was just wondering", "just a thought"], t: "I have been obsessing about this and I have a very strong opinion I'm about to disguise as a casual musing.", pol: 72, tip: "'Just' is the British camouflage word. Nothing that follows 'just thinking' is casual." },
+  { p: ["when you get a chance", "when you have a moment", "whenever you're free", "if you get a minute"], t: "Do this immediately. I am being polite but I mean right now.", pol: 82, tip: "The longer and more relaxed the timeframe they give you, the more urgently they actually need it." },
+  { p: ["no rush", "no rush at all", "absolutely no rush", "no hurry"], t: "Please hurry. There is definitely a rush. The rush is now.", pol: 80, tip: "'No rush' is the British way of setting an invisible deadline that was five minutes ago." },
+  { p: ["at your convenience", "at your earliest convenience"], t: "Right now. At MY convenience. Which is right now.", pol: 82, tip: "'At your convenience' is a polite fiction. Replace it with 'immediately' for the true meaning." },
+  { p: ["i'll see what i can do", "let me see what i can do"], t: "I will do absolutely nothing.", pol: 75, tip: "They have already seen what they can do. The answer was nothing. They're just too polite to say so." },
+  { p: ["that's not really my area", "that's not really my department", "i'm not sure i'm the right person"], t: "This is not my problem and I refuse to make it my problem.", pol: 70, tip: "This is a clean, elegant British exit from responsibility." },
+
+  // ── Brave / interesting / original (the devastating trio) ──
+  { p: ["that's a very brave decision", "that's very brave", "how very brave", "that's brave", "very brave"], t: "You are making a terrible mistake and I want no part of it.", pol: 88, tip: "In British, 'brave' almost never means courageous. It means foolish." },
+  { p: ["that's very interesting", "that is very interesting", "how interesting", "that's really interesting"], t: "I think that is one of the most ridiculous things I have ever heard.", pol: 90, tip: "'Interesting' is doing an enormous amount of heavy lifting in this sentence." },
+  { p: ["that's an original idea", "that's very original", "how original", "what an original idea"], t: "That is the worst idea I have ever heard and I'm concerned about your judgement.", pol: 88, tip: "'Original' in British doesn't mean innovative. It means 'nobody else would ever think of this, and for good reason'." },
+  { p: ["that's ambitious", "that's very ambitious", "quite ambitious", "how ambitious"], t: "That is completely impossible and you're deluded for thinking otherwise.", pol: 85, tip: "'Ambitious' is the British way of saying 'you're reaching for the stars while standing in a hole'." },
+  { p: ["that's creative", "how creative", "that's a creative solution"], t: "That's bizarre and probably won't work, but I admire your willingness to try something insane.", pol: 78, tip: "When 'creative' is used about a practical solution, it means 'unconventional and probably doomed'." },
+  { p: ["that's bold", "how bold", "that's a bold move", "bold strategy"], t: "You're taking a huge, probably foolish risk and I'm going to watch from a safe distance.", pol: 80, tip: "'Bold' joins 'brave' and 'ambitious' in the British trilogy of disguised criticism." },
+
+  // ── I'm sure / I'm afraid / Unfortunately ──
+  { p: ["i'm sure it's my fault", "i'm sure it's probably my fault", "it's probably my fault"], t: "It is absolutely, unequivocally, 100% your fault.", pol: 94, tip: "The more certain they are it's 'their' fault, the more certain they are it's yours." },
+  { p: ["i'm sure you've done your best", "i'm sure you tried your best", "i'm sure you did your best"], t: "Your best was not good enough. Not even close.", pol: 90, tip: "This is the most devastating sentence in British English. It sounds like comfort; it's a verdict." },
+  { p: ["i'm afraid that's not possible", "i'm afraid we can't", "i'm afraid not"], t: "No. And I'm not remotely afraid. I'm quite comfortable saying no.", pol: 78, tip: "They are not afraid. Fear has nothing to do with this. They just don't want to do it." },
+  { p: ["i'm afraid there's been a bit of a problem", "i'm afraid there's a slight problem"], t: "There has been a catastrophic failure. Brace yourself.", pol: 88, tip: "'A bit of a problem' preceded by 'I'm afraid' is the British version of a four-alarm fire." },
+
+  // ── Social / invitations / goodbyes ──
+  { p: ["you must come for dinner", "we should do dinner", "we must do lunch", "let's do lunch", "you must come round", "we should catch up", "we must catch up", "let's catch up sometime", "we should get together"], t: "This is absolutely not a real invitation. Please do not show up at my house.", pol: 85, tip: "A real British invitation comes with a specific date, time, and a follow-up text. Anything else is pleasant noise." },
+  { p: ["i might join you later", "i might pop along", "i might swing by", "i might come along", "i'll try to make it"], t: "I am not coming. Under any circumstances. Please don't wait for me.", pol: 72, tip: "In British, 'might' means 'will not'. 'I'll try' means 'I won't'." },
+  { p: ["pop round anytime", "come round whenever", "door's always open", "you're always welcome"], t: "Please give me at least two weeks' notice and definitely do not just show up.", pol: 78, tip: "An open invitation in British is a closed one everywhere else." },
+  { p: ["right then", "right, then", "right!", "right, well"], t: "I want to leave. This interaction is now over. Goodbye.", pol: 50, tip: "Often accompanied by a slap of the knees. This is the British ejector seat." },
+  { p: ["anyway", "anywaaay", "so anyway"], t: "Please stop talking. I am now changing the subject whether you like it or not.", pol: 45, tip: "The longer the 'anyway' is drawn out, the more desperately they want you to stop." },
+  { p: ["have a good weekend", "have a lovely weekend", "enjoy your weekend"], t: "This conversation is over. I'm leaving now. Goodbye until Monday.", pol: 40, tip: "This is a polite ejector seat. They're not wishing you well; they're ending the interaction." },
+  { p: ["safe travels", "have a safe journey", "safe trip"], t: "Goodbye. I have concluded our interaction. Please physically leave now.", pol: 45, tip: "A farewell, not a genuine travel advisory. They want you to go." },
+  { p: ["pleased to meet you", "pleasure to meet you", "lovely to meet you"], t: "Hello. This is a social obligation, not an expression of genuine pleasure. I don't know you yet.", pol: 50, tip: "They may well be pleased eventually, but right now they're just running the British greeting protocol." },
+  { p: ["we should do this again", "we must do this again", "let's do this again sometime"], t: "I may or may not want to do this again, but saying this is the required British exit line. Don't book anything.", pol: 72, tip: "Like 'let's do lunch', this is a social nicety, not a plan. Wait for them to suggest an actual date." },
+  { p: ["give my regards", "send my love", "say hello from me"], t: "I'd like this person to know I thought of them, but not enough to actually contact them myself.", pol: 55, tip: "A genuine sentiment, but also a way of outsourcing social maintenance." },
+
+  // ── How are you / greetings ──
+  { p: ["how are you", "how do you do", "you alright", "alright", "how's things", "how's it going", "how have you been"], t: "Hello. This is a greeting, not a question. I do not want to know how you actually are. Please just say 'fine' and let's move on.", pol: 40, tip: "If you actually answer this honestly, a British person will be trapped in a conversation they never wanted." },
+
+  // ── Fine / not fine ──
+  { p: ["no, no, it's fine, honestly", "no it's fine honestly", "honestly, it's fine", "it's fine honestly", "no really it's fine", "no, honestly, it's fine"], t: "It is the furthest thing from fine. I am deeply upset. But I will die before I say so.", pol: 92, tip: "Repetition of reassurance is a cry for help. The more 'fines' and 'honestlys', the worse things are." },
+  { p: ["it's absolutely fine", "that's absolutely fine", "perfectly fine"], t: "It is very much NOT fine and I am furious, but the word 'absolutely' is my shield.", pol: 88, tip: "Adding 'absolutely' or 'perfectly' to 'fine' doesn't strengthen it \u2014 it reveals the lie." },
+  { p: ["it was fine", "it went fine"], t: "It was mediocre to terrible but I'd rather not relive it by explaining.", pol: 65, tip: "'Fine' is the beige paint of British vocabulary. It covers everything and reveals nothing." },
+  { p: ["it's fine", "that's fine", "fine"], t: "It is not fine.", pol: 70, tip: "The most dangerous two words in the British vocabulary. Approach with extreme caution." },
+
+  // ── Nice (context-dependent) ──
+  { p: ["oh, that's nice", "oh that's nice", "ooh, that's nice", "ooh that's nice", "oh how nice"], t: "That genuinely is lovely! I'm actually impressed and this is one of the rare times I'm being sincere.", pol: 30, tip: "The 'oh' at the start signals genuine surprise and delight. Treasure this \u2014 you've earned real British approval." },
+  { p: ["they're nice", "he's nice", "she's nice", "they seem nice", "he seems nice", "she seems nice"], t: "They are profoundly boring. There is nothing else noteworthy to say about them.", pol: 70, tip: "When 'nice' is the only adjective a British person can find for someone, it means there's truly nothing else there." },
+  { p: ["nice enough", "pleasant enough"], t: "Mediocre. Thoroughly, unremarkably mediocre.", pol: 65, tip: "'Enough' is doing a lot of quiet damage here." },
+  { p: ["it's quite nice", "that's quite nice", "quite nice"], t: "I really don't like it. At all. But I'd rather chew my own arm off than say so.", pol: 80, tip: "'Quite nice' is where British politeness goes to hide genuine displeasure." },
+  { p: ["it's nice", "that's nice"], t: "It's fine. I have no strong feelings. I will forget about this in roughly four seconds.", pol: 55, tip: "A standalone 'nice' without enthusiasm is the verbal equivalent of a shrug." },
+  { p: ["nice one", "very nice"], t: "This could be genuine or deeply sarcastic. Tone is everything. Good luck working out which.", pol: 50, tip: "Context is king. Said with a smile after a goal? Genuine. Said flatly after you spilled tea on them? Run." },
+
+  // ── Good / not bad ──
+  { p: ["not bad", "not bad at all"], t: "This is actually really good. Possibly the best thing I've seen in ages.", pol: 60, tip: "British praise is delivered through the absence of criticism. 'Not bad' is basically a standing ovation." },
+  { p: ["not too bad", "not so bad"], t: "Things are actually going rather well! This is the British equivalent of jumping for joy.", pol: 55, tip: "Double negative = genuine positive. This is as enthusiastic as it gets." },
+  { p: ["quite good"], t: "It's disappointing, but I'm far too polite to say so.", pol: 75, tip: "'Quite' is the British dimmer switch. It turns everything down a few notches from what you'd expect." },
+  { p: ["rather good", "rather nice"], t: "This is actually genuinely good! 'Rather' before something positive is quiet, restrained praise.", pol: 45, tip: "'Rather' is the older, posher cousin of 'quite' \u2014 and unlike 'quite', it usually means what it says." },
+  { p: ["good, good", "yes, good"], t: "I have processed what you said. I may or may not agree. We're moving on.", pol: 50, tip: "Double 'good' is verbal filler. It means 'acknowledged', nothing more." },
+
+  // ── Understatement classics ──
+  { p: ["mustn't grumble", "can't complain", "mustn't complain"], t: "Everything is going terribly but I would rather suffer in silence than discuss my feelings.", pol: 70, tip: "This person is grumbling. They are complaining. They just have to do it in code." },
+  { p: ["bit of a pickle", "in a bit of a pickle", "in a pickle"], t: "I am in a serious crisis and I need help immediately.", pol: 82, tip: "The size of the British understatement is directly proportional to the size of the problem." },
+  { p: ["slight hiccup", "minor hiccup", "a bit of a hiccup", "little hiccup"], t: "There has been a complete and utter disaster.", pol: 88, tip: "If a British person describes something as a 'slight hiccup', check for smoke." },
+  { p: ["it could be worse", "could be worse"], t: "It is very, very bad.", pol: 62, tip: "If a British person is reaching for comparisons to worse scenarios, the current scenario is grim." },
+  { p: ["it's not ideal", "not ideal", "less than ideal", "not exactly ideal"], t: "This is a complete mess and someone needs to fix it urgently.", pol: 80, tip: "'Not ideal' covers everything from 'slightly inconvenient' to 'the building is on fire'." },
+  { p: ["it could do with some work", "could do with some improvement", "room for improvement"], t: "It needs to be completely redone from scratch.", pol: 82, tip: "'Room for improvement' is a vast, cavernous room. You could fit a cathedral in it." },
+  { p: ["we're getting there", "nearly there", "we're almost there"], t: "We are nowhere near there. 'There' is a distant speck on the horizon.", pol: 70, tip: "British optimism is usually just denial wearing a cheerful hat." },
+  { p: ["a bit of a situation", "we have a situation", "there's been a situation"], t: "Full-blown crisis. Think flashing red lights and alarm bells.", pol: 85, tip: "'A situation' in British is what other cultures would call 'an emergency'." },
+  { p: ["it's character building", "character building"], t: "This is absolutely miserable, but I'm pretending there's a silver lining.", pol: 65, tip: "Nothing described as 'character building' has ever been enjoyable. Not once." },
+  { p: ["mustn't make a fuss", "don't want to make a fuss", "i don't want to be a bother", "i don't want to cause any trouble", "sorry to be a nuisance"], t: "I am about to make a fuss. I need something. But I need you to know how reluctant I am about needing it.", pol: 80, tip: "The British approach to asking for help: apologise profusely, minimise the need, then finally ask." },
+  { p: ["it's a bit much", "a bit much", "a bit over the top", "a bit ott"], t: "It is completely over the top and I strongly disapprove.", pol: 65, tip: "'A bit' is the British measurement unit for 'extremely'." },
+  { p: ["a bit of a trek", "quite a trek", "bit of a journey"], t: "It is unacceptably far away and I resent having to go there.", pol: 60, tip: "Anything described as 'a bit of a trek' is somewhere the British person has already decided they don't want to go." },
+  { p: ["bit nippy", "a bit nippy", "bit chilly", "a bit chilly", "bit cold", "a bit cold"], t: "It is absolutely freezing. I may lose extremities.", pol: 55, tip: "If a British person comments on the cold at all, it's probably hypothermia-level." },
+  { p: ["bit warm", "a bit warm", "bit hot"], t: "It is unbearably hot. I am melting. This is intolerable.", pol: 55, tip: "The British are hardwired to understate weather. 'A bit warm' means they're considering emigration." },
+
+  // ── Sorry ──
+  { p: ["sorry, but", "i'm sorry, but", "sorry but", "i'm sorry but"], t: "I'm not remotely sorry, and whatever follows this 'but' is the part that actually matters.", pol: 65, tip: "'Sorry but' is the British way of loading a weapon before firing it politely." },
+  { p: ["i'm so sorry", "so sorry", "i'm terribly sorry", "frightfully sorry", "ever so sorry", "awfully sorry"], t: "This ranges from 'you bumped into ME but I'm apologising' to genuine sympathy. Probably the former.", pol: 60, tip: "The intensity of the sorry often has an inverse relationship to the amount of actual guilt." },
+  { p: ["sorry"], t: "This could mean 'excuse me', 'that was your fault', 'I need to get past you', 'please repeat that', or just 'I exist and I feel I should apologise for it'. Guilt is rarely involved.", pol: 55, tip: "The British say 'sorry' roughly 47 times per day. Approximately none are genuine apologies." },
+
+  // ── Thinking about it / bearing it in mind ──
+  { p: ["i'll bear it in mind", "i'll bear that in mind", "i'll keep that in mind"], t: "I have already completely forgotten what you just said.", pol: 80, tip: "Nothing has ever been borne in mind. It's the polite equivalent of the recycling bin." },
+  { p: ["i'll think about it", "let me think about it", "i'll give it some thought", "i'll have a think"], t: "No.", pol: 80, tip: "They will not think about it. The thinking is already done. The answer is no." },
+  { p: ["we'll see", "we shall see"], t: "No, but I'm not going to tell you that yet. I'm going to let time do the rejecting for me.", pol: 75, tip: "'We'll see' is the British art of saying no without technically saying no." },
+  { p: ["i'll see what i can do"], t: "I will do nothing. But I want you to feel hopeful for a while longer.", pol: 75, tip: "They have already seen what they can do. The answer was nothing." },
+
+  // ── Opinions disguised as non-opinions ──
+  { p: ["i almost agree"], t: "I don't agree at all. Not even slightly.", pol: 82, tip: "'Almost' is doing the work of 'absolutely not' here." },
+  { p: ["if you say so"], t: "You are completely wrong but I've given up trying to help you.", pol: 68, tip: "This is the sound of a British person washing their hands of your decisions." },
+  { p: ["fair enough"], t: "I disagree but I've decided this argument isn't worth my energy.", pol: 50, tip: "'Fair enough' is the British white flag. They haven't changed their mind; they've just chosen peace." },
+  { p: ["i suppose so", "i suppose", "suppose so"], t: "I disagree, but I'm too tired to argue. You win by default, not by merit.", pol: 65, tip: "'I suppose' is the sound of reluctant, unenthusiastic surrender." },
+  { p: ["i don't mind", "i'm easy", "i'm not fussed", "i'm not bothered", "whatever you think", "whatever you prefer"], t: "I have a very strong preference but I'll resent you in silence if you choose wrong.", pol: 78, tip: "A British person saying 'I don't mind' is a test. You are expected to read their mind." },
+  { p: ["personally, i think", "personally i think", "personally"], t: "Everyone should think this. This is the correct opinion and all other opinions are wrong.", pol: 72, tip: "'Personally' is how British people make absolute declarations sound like humble suggestions." },
+  { p: ["to be fair", "to be fair though", "tbf"], t: "I'm about to defend something you criticised, and I think you're being unreasonable.", pol: 55, tip: "'To be fair' is the British shield that comes out when they disagree but want to sound balanced." },
+  { p: ["i'm not being funny but", "i'm not being funny,", "not being funny but"], t: "I am about to say something very direct and possibly quite rude, and I'm not sorry about it.", pol: 35, tip: "This is the British removing their politeness safety catch. Brace yourself." },
+  { p: ["no offence but", "no offence,", "no offense but", "no offense,"], t: "I am about to say something offensive.", pol: 25, tip: "These two words have never once in history prevented offence." },
+  { p: ["don't take this the wrong way", "don't take this the wrong way but"], t: "I am about to say something you will definitely take the wrong way.", pol: 40, tip: "This phrase exists solely to give the speaker plausible deniability for what follows." },
+  { p: ["the thing is", "the thing is though", "thing is"], t: "I'm about to tell you why the answer is no, but I'm going to take the scenic route to get there.", pol: 60, tip: "Once you hear 'the thing is', prepare for a gentle but firm rejection." },
+  { p: ["look", "look,"], t: "I'm frustrated and I'm about to stop being polite. This is the British gloves-off moment.", pol: 30, tip: "When a British person starts with 'Look', they have exhausted their patience reserves." },
+  { p: ["at the end of the day"], t: "I'm about to give my final opinion, and I don't care about yours.", pol: 45, tip: "This is the British way of pulling rank on a discussion." },
+  { p: ["to be perfectly honest", "to be honest", "to be completely honest", "honestly", "if i'm being honest", "tbh"], t: "Everything I have said up to this point may not have been entirely honest. What follows is the real version.", pol: 50, tip: "The fact that they need to flag they're being honest implies that honesty is not their default setting." },
+  { p: ["i mean", "what i mean is"], t: "What I just said was too polite to convey my actual meaning. Let me try again with slightly less camouflage.", pol: 50, tip: "'I mean' is a British self-correction when they realise their politeness has completely obscured their point." },
+
+  // ── Genuine positives (rare and precious) ──
+  { p: ["absolutely fantastic", "absolutely wonderful", "absolutely brilliant", "absolutely lovely", "absolutely gorgeous", "absolutely stunning", "absolutely amazing", "absolutely superb", "absolutely cracking"], t: "I genuinely mean this! This is real, unfiltered British enthusiasm. Savour it \u2014 it's rare.", pol: 20, tip: "'Absolutely' before a positive word is the British sincerity signal. They've dropped the irony shield." },
+  { p: ["proper good", "proper brilliant", "proper lovely", "proper nice"], t: "This is genuinely excellent. 'Proper' is the Northern/informal sincerity stamp of approval.", pol: 25, tip: "'Proper' before a positive word means the British person has abandoned understatement. This is real." },
+  { p: ["dead good", "dead nice", "dead lovely", "dead brilliant"], t: "This is genuinely great. 'Dead' as an intensifier means they've gone full Northern sincerity.", pol: 20, tip: "'Dead' + positive word = they really, really mean it. No irony, no filter." },
+  { p: ["i'm chuffed", "well chuffed", "chuffed to bits"], t: "I am genuinely, sincerely happy. This is real delight!", pol: 25, tip: "'Chuffed' is one of the few British words that is always genuine. You cannot be sarcastically chuffed." },
+  { p: ["over the moon"], t: "I am absolutely thrilled! Genuine, unbridled happiness.", pol: 20, tip: "This is real emotion. The British person has temporarily abandoned their emotional restraint." },
+  { p: ["cracking", "that's cracking"], t: "That's genuinely excellent! This is real Northern/informal praise.", pol: 25, tip: "'Cracking' is honest-to-goodness enthusiasm." },
+  { p: ["smashing", "that's smashing"], t: "That's genuinely wonderful! Old-fashioned but heartfelt.", pol: 25, tip: "'Smashing' is what your British friend's dad says when he means it." },
+  { p: ["well done", "well done!"], t: "This is probably genuine praise! Unlike 'good for you', a simple 'well done' is usually sincere.", pol: 35, tip: "Tone matters \u2014 but a straightforward 'well done' is one of the safer British compliments to take at face value." },
+  { p: ["i'm gutted", "absolutely gutted", "gutted"], t: "I am genuinely devastated. This is real emotion breaking through.", pol: 30, tip: "'Gutted' is always genuine. Nobody says 'gutted' sarcastically." },
+  { p: ["buzzing", "i'm buzzing", "absolutely buzzing"], t: "I am extremely excited! Genuine enthusiasm, usually about something specific.", pol: 20, tip: "'Buzzing' is always sincere. This person is properly thrilled." },
+  { p: ["mint", "that's mint"], t: "That's excellent! Genuine Northern approval.", pol: 20, tip: "'Mint' is always positive. No hidden meanings here." },
+  { p: ["ace", "that's ace"], t: "That's great! Genuine, uncomplicated approval.", pol: 20, tip: "'Ace' is refreshingly straightforward British praise." },
+
+  // ── Condescension / passive aggression ──
+  { p: ["well done you", "good for you"], t: "I am being deeply condescending right now.", pol: 40, tip: "Tone is everything. If it sounds like they're praising a toddler, they're not being kind." },
+  { p: ["bless", "bless him", "bless her", "bless them", "oh bless", "bless your heart"], t: "How adorably naive/helpless. I feel a mixture of pity and mild amusement.", pol: 55, tip: "'Bless' in British English is affectionate condescension. They think you're sweet but a bit hopeless." },
+  { p: ["how wonderful for you", "isn't that lovely for you"], t: "I could not care less about your achievement but social convention demands I say something.", pol: 75, tip: "The more words they add, the less genuine it is. 'Great' = maybe real. 'How wonderful for you' = definitely not." },
+  { p: ["i was a bit disappointed", "a bit disappointed", "slightly disappointed"], t: "I was absolutely furious and I am still seething inside.", pol: 85, tip: "'A bit disappointed' is the British way of describing volcanic rage." },
+
+  // ── Commands disguised as suggestions ──
+  { p: ["perhaps you could", "perhaps you might", "perhaps you should", "you might want to", "you may want to"], t: "Do this. Now. I'm telling you, not asking.", pol: 88, tip: "'Perhaps' is the British way of issuing a direct order while maintaining the illusion of democracy." },
+  { p: ["it might be worth", "it might be worth considering", "have you considered", "have you thought about"], t: "You should definitely do this. I've thought about it and I'm right.", pol: 80, tip: "British 'suggestions' are usually instructions delivered at a lower volume." },
+  { p: ["if you wouldn't mind", "would you mind", "if it's not too much trouble"], t: "Please do this thing. I'm being polite but this is not optional.", pol: 85, tip: "They would very much mind if you didn't. 'If you wouldn't mind' is a command wrapped in velvet." },
+  { p: ["do what you like", "do whatever you want", "it's up to you", "it's your call", "your decision"], t: "There is one correct choice here, and if you don't make it, I will remember.", pol: 70, tip: "When a British person gives you 'freedom to choose', they've already chosen for you. Your job is to guess correctly." },
+
+  // ── Worry / reassurance ──
+  { p: ["i wouldn't worry about it", "don't worry about it", "nothing to worry about"], t: "You should definitely worry about it. I am already worrying about it.", pol: 72, tip: "British reassurance is frequently the opposite of reassuring." },
+  { p: ["no worries", "no problem", "no drama"], t: "There were definitely worries. There was absolutely a problem. But we're moving on.", pol: 55, tip: "The British 'no worries' is the sound of someone actively worrying." },
+
+  // ── British filler / acknowledgment words ──
+  { p: ["lovely", "that's lovely", "oh lovely"], t: "I'm genuinely pleased! Or I'm filling an awkward silence. You'll never know which.", pol: 50, tip: "'Lovely' is the Swiss army knife of British English. It works everywhere and means everything." },
+  { p: ["brilliant"], t: "Acknowledged. I have heard you. This word carries no actual opinion \u2014 it's just a full stop with extra steps.", pol: 45, tip: "'Brilliant' on its own often means nothing more than 'OK'. Don't let it go to your head." },
+  { p: ["cheers"], t: "Thanks / goodbye / I acknowledge your existence. The most efficient word in British English.", pol: 30, tip: "'Cheers' is a miracle of linguistic compression. It can mean literally anything positive." },
+  { p: ["ta", "ta very much"], t: "Thanks! Informal but usually genuine.", pol: 25, tip: "'Ta' is the British verbal shortcut for gratitude. Quick, efficient, and usually sincere." },
+  { p: ["right", "right,", "right."], t: "I've processed what you said. Now I'm either moving on, disagreeing silently, or preparing to leave.", pol: 45, tip: "A standalone 'right' is the Swiss army knife of British transitions." },
+  { p: ["sure", "sure sure", "yeah sure"], t: "Mild reluctance disguised as agreement. I'll do it, but I want you to know I'm not thrilled.", pol: 55, tip: "'Sure' in British is less enthusiastic than in American English. It's agreement with a sigh built in." },
+  { p: ["indeed", "indeed."], t: "I acknowledge what you've said. I may or may not agree. I'm being deliberately opaque.", pol: 60, tip: "'Indeed' is the British way of responding without committing to any actual position." },
+
+  // ── Tea-related ──
+  { p: ["fancy a cuppa", "cup of tea", "shall i put the kettle on", "put the kettle on", "brew up"], t: "This is a genuine, sacred offer. Tea is the British answer to everything. Accept it.", pol: 15, tip: "A tea offer is one of the most sincere things a British person can do. It means they care about you, or at least your hydration." },
+  { p: ["i'll put the kettle on"], t: "Something significant has happened \u2014 good or bad \u2014 and we need tea before we can process it.", pol: 20, tip: "The kettle is the British crisis management tool. If the kettle is going on, something is going on." },
+  { p: ["it's not my cup of tea", "not really my cup of tea", "not my cup of tea"], t: "I actively dislike this, but I'm expressing it through the medium of tea metaphors to soften the blow.", pol: 68, tip: "Invoking tea in a negative way is serious business. They really don't like it." },
+
+  // ── Weather ──
+  { p: ["lovely day", "nice day", "beautiful day", "gorgeous day"], t: "It's not raining. This is the highest form of British weather praise.", pol: 20, tip: "The British weather bar is set extraordinarily low. 'Lovely day' might mean 14 degrees and partly cloudy." },
+  { p: ["bit of a grey one", "a bit grey", "bit overcast"], t: "It's completely miserable outside but acknowledging that would be too emotional.", pol: 50, tip: "British weather commentary is a whole secondary language of understatement." },
+
+  // ── Miscellaneous classics ──
+  { p: ["i almost agree"], t: "I don't agree at all. Not even slightly.", pol: 82, tip: "'Almost' is doing the work of 'absolutely not' here." },
+  { p: ["nil desperandum"], t: "Things are genuinely desperate. I'm using Latin to cope.", pol: 65, tip: "When a British person reaches for Latin, the situation is worse than they're letting on." },
+  { p: ["i wouldn't say no"], t: "I desperately want this. Please offer it to me again.", pol: 65, tip: "'I wouldn't say no' is the British way of saying 'yes please' without appearing too eager." },
+  { p: ["not to worry", "never mind", "not to fret"], t: "The moment for fixing this has passed. I'm annoyed but I'm choosing to bury it.", pol: 60, tip: "'Not to worry' means they were worrying, and now they're choosing stoic resignation instead." },
+  { p: ["i'm not entirely sure", "i'm not entirely convinced", "i'm not 100% sure"], t: "I am absolutely sure. And you're wrong. I just can't say that directly.", pol: 78, tip: "'Not entirely' in British means 'not at all'." },
+  { p: ["if you like", "if you want"], t: "I don't want this but I'm not going to stop you, and I reserve the right to judge you silently.", pol: 62, tip: "'If you like' is conditional permission with a hidden disapproval clause." },
+  { p: ["that's different", "well that's different", "that's certainly different", "that's... different"], t: "That's strange and I don't like it.", pol: 72, tip: "'Different' in British almost never means refreshingly unique. It means weird." },
+  { p: ["how shall i put this", "how can i put this", "how do i put this"], t: "I'm about to say something I think you won't like, and I'm stalling while I wrap it in enough politeness to get away with it.", pol: 75, tip: "This is the verbal equivalent of putting on oven gloves before handling something hot." },
+  { p: ["with respect", "with the best will in the world"], t: "I have no respect for what you just said. None whatsoever.", pol: 85, tip: "The shorter the 'respect' phrase, the less respect there is." },
+  { p: ["obviously", "obviously,"], t: "This is not obvious to you, which is why I'm explaining it, but I want you to feel bad for not already knowing.", pol: 55, tip: "'Obviously' is the British way of making you feel stupid while appearing helpful." },
+  { p: ["clearly", "clearly,"], t: "It's not clear to you, is it? That's why I'm explaining it with barely concealed frustration.", pol: 55, tip: "'Clearly' signals that the speaker thinks this should have been apparent to anyone with a brain." },
+  { p: ["interestingly", "interestingly,", "interestingly enough"], t: "I'm about to prove you wrong, and I'm going to enjoy it.", pol: 65, tip: "'Interestingly' is the British academic's way of drawing a weapon." },
+  { p: ["shall we", "shall we?"], t: "We're doing this now. This is not a question. Let's go.", pol: 50, tip: "'Shall we?' is a polite command to start moving, doing, or leaving." },
+  { p: ["fancy that", "well fancy that"], t: "I am surprised, but I'm expressing it in the most understated way possible.", pol: 40, tip: "'Fancy that' is genuine mild surprise \u2014 it's actually one of the more honest British expressions." },
+  { p: ["i couldn't possibly", "i really couldn't", "oh i couldn't"], t: "I absolutely could and I want to. Please insist. I'm waiting for you to override my fake reluctance.", pol: 70, tip: "The British refusal dance: refuse once, get offered again, refuse again, accept 'reluctantly'. It's choreographed." },
+  { p: ["you shouldn't have", "you really shouldn't have"], t: "I'm glad you did! This is genuine gratitude disguised as a gentle scolding.", pol: 40, tip: "One of the nicer British phrases \u2014 'you shouldn't have' is almost always affectionate." },
+  { p: ["what a palaver", "what a faff", "bit of a faff", "such a faff"], t: "This was unreasonably complicated and I'm thoroughly annoyed about the wasted effort.", pol: 50, tip: "'Faff' and 'palaver' are the British words for unnecessary complexity. They're always genuine complaints." },
+  { p: ["bloody hell", "blimey", "crikey", "cor blimey", "goodness me", "good grief", "good lord", "gosh"], t: "I am genuinely shocked or impressed. This is real, unfiltered British surprise.", pol: 25, tip: "British exclamations are almost always genuine. The politeness filter has been bypassed." },
+  { p: ["rubbish", "that's rubbish", "what rubbish", "absolute rubbish"], t: "That's terrible / untrue / nonsense. This is one of the few times a British person is being completely direct.", pol: 20, tip: "'Rubbish' is refreshingly honest. No hidden meanings. They think it's bad and they're saying so." },
+
+  // ── Mild British insults / slang (affectionate to mildly rude) ──
+  { p: ["you numpty", "numpty", "what a numpty"], t: "You lovable idiot. This is an affectionate insult \u2014 they think you're silly but they don't hate you for it.", pol: 30, tip: "'Numpty' is one of the friendliest insults in British English. It's basically a verbal eye-roll." },
+  { p: ["you plonker", "plonker", "what a plonker"], t: "You fool! But said with warmth. Think Del Boy from Only Fools and Horses. It's more fond than angry.", pol: 30, tip: "'Plonker' is a classic sitcom-grade British insult. It's too funny-sounding to be genuinely mean." },
+  { p: ["you muppet", "muppet", "what a muppet"], t: "You're being an idiot, but in an endearing Kermit-the-Frog sort of way.", pol: 30, tip: "'Muppet' is an insult that somehow makes people smile. It's impossible to say it with real venom." },
+  { p: ["you wally", "wally", "what a wally"], t: "You're being a bit silly or clueless. This is a gentle, old-fashioned telling-off.", pol: 35, tip: "'Wally' is the kind of insult your grandad would use. Harmless and slightly charming." },
+  { p: ["you pillock", "pillock"], t: "You're an idiot, but said with a touch of exasperation rather than genuine anger.", pol: 35, tip: "'Pillock' is a step up from 'numpty' on the British insult scale, but still in the affectionate zone." },
+  { p: ["you prat", "prat", "what a prat"], t: "You're being foolish or pretentious. Slightly sharper than 'numpty' but still in the mild category.", pol: 35, tip: "'Prat' implies someone is being a bit full of themselves or making silly choices." },
+  { p: ["you nutter", "nutter", "absolute nutter"], t: "You're crazy \u2014 but in a way that's either impressive or entertaining. Often said with a grin.", pol: 25, tip: "'Nutter' in British is often a compliment in disguise. 'Absolute nutter' can mean 'brilliantly brave/funny person'." },
+  { p: ["daft", "you're daft", "don't be daft", "daft as a brush"], t: "You're being silly. 'Daft' is one of the softest ways to call someone foolish in British English.", pol: 30, tip: "'Don't be daft' is practically affectionate. It's the British way of saying 'oh, come on, be sensible'." },
+  { p: ["barmy", "you're barmy", "that's barmy", "absolutely barmy"], t: "That's crazy or you're crazy \u2014 but in a light-hearted, 'what are you like' kind of way.", pol: 30, tip: "'Barmy' is gentle British madness. It's eccentric, not dangerous." },
+  { p: ["git", "you git", "cheeky git", "old git", "miserable git"], t: "A mildly annoying person, but 'git' covers a huge range \u2014 'cheeky git' is almost affectionate, 'miserable git' less so.", pol: 35, tip: "'Git' is versatile. With 'cheeky' or 'old' in front, it's basically a term of endearment." },
+  { p: ["minger", "that's minging"], t: "Ugly or disgusting. This one's not affectionate \u2014 it's a genuine negative judgement, but in playground language.", pol: 40, tip: "'Minging' is honest British disgust expressed through slang rather than formal complaint." },
+  { p: ["sod it", "sod off", "sod that", "sod this"], t: "I've given up / go away / I'm done with this. Mild frustration expressed through mild profanity.", pol: 35, tip: "'Sod' is the family-friendly version of a stronger word. It's the British PG-rated frustration." },
+  { p: ["taking the mick", "taking the mickey", "taking the piss", "are you taking the mick", "having a laugh"], t: "Are you joking? Are you making fun of me? Are you being serious right now?!", pol: 40, tip: "If someone asks if you're 'taking the mick', you've either made a joke that landed or said something so ridiculous they can't believe you're serious." },
+  { p: ["wind up", "winding me up", "having me on", "are you winding me up", "you're winding me up"], t: "Are you deliberately trying to annoy me or trick me? Because it's working.", pol: 40, tip: "A 'wind-up' is a deliberate provocation or joke at someone's expense. 'Are you winding me up?' means 'I can't tell if you're joking or genuinely this ridiculous'." },
+
+  // ═══════════════════════════════════════════════════════════
+  // BATCH 2: Expanded to 500 entries
+  // ═══════════════════════════════════════════════════════════
+
+  // ── Pub & drinking ──
+  { p: ["fancy a pint", "fancy a drink", "quick pint", "a swift half"], t: "This is a genuine invitation \u2014 one of the most sincere things a British person can offer. Accept immediately.", pol: 20, tip: "Unlike 'we must do lunch', a pub invitation is almost always real. The British are honest about beer." },
+  { p: ["just the one", "only having one", "one more won't hurt", "go on then, just one"], t: "It will absolutely not be just one. This is the opening line of a session that could last hours.", pol: 35, tip: "'Just the one' is a comforting fiction the British tell themselves before their third pint." },
+  { p: ["i'm not drunk", "i'm not even drunk", "i'm fine honestly", "i'm absolutely fine"], t: "They are at least moderately drunk. The more they deny it, the more certain it is.", pol: 40, tip: "British denial of drunkenness scales perfectly with actual drunkenness." },
+  { p: ["a cheeky pint", "cheeky drink", "cheeky wine", "cheeky one"], t: "I know I probably shouldn't be drinking right now, but I'm going to anyway and I'd like you to find it charming rather than irresponsible.", pol: 30, tip: "'Cheeky' gives the drink a sense of playful rebellion. It makes Tuesday afternoon drinking feel like an adventure." },
+  { p: ["one for the road"], t: "I should have left an hour ago. This is my exit drink, which may or may not be followed by another exit drink.", pol: 35, tip: "'One for the road' has never once been the last drink. It's the drink before the drink before leaving." },
+  { p: ["hair of the dog", "bit rough this morning", "feeling a bit fragile"], t: "I am severely hungover and I'm trying to make it sound quirky and charming rather than deeply unpleasant.", pol: 40, tip: "British hangover language is masterfully understated. 'A bit fragile' can mean 'barely functional'." },
+  { p: ["my round", "i'll get this one", "it's my shout"], t: "I'm buying drinks. This is a genuine, binding social contract. Remember this \u2014 you owe the next round.", pol: 20, tip: "Round-buying in Britain is a sacred pact. Forgetting your round is a social crime roughly equivalent to treason." },
+  { p: ["whose round is it", "your round i think"], t: "It is definitely your round. I know exactly whose round it is and I'm being 'diplomatic' about it.", pol: 45, tip: "They know it's your round. Everyone knows it's your round. The question is a polite prompt, not genuine confusion." },
+  { p: ["last orders"], t: "The pub is closing. This triggers a primal British urgency to order three drinks in sixty seconds.", pol: 20, tip: "'Last orders' causes a Pavlovian rush to the bar. It's one of the most powerful phrases in British culture." },
+
+  // ── Food & restaurants ──
+  { p: ["it's not bad actually", "it's actually not bad", "actually quite nice"], t: "It's genuinely good! The 'actually' reveals that I expected it to be terrible and I'm pleasantly surprised.", pol: 45, tip: "'Actually' before praise means they went in with low expectations and were proven wrong. This is honest." },
+  { p: ["it's a bit bland", "a bit plain", "could do with more seasoning"], t: "This has absolutely no flavour. It tastes of nothing. I am eating cardboard and being polite about it.", pol: 75, tip: "'A bit bland' means entirely flavourless. The British understatement is doing backflips here." },
+  { p: ["it's an acquired taste", "very much an acquired taste"], t: "It's horrible, but I'm framing that as a personal failing on your part for not having acquired the taste yet.", pol: 72, tip: "'Acquired taste' is the British way of saying something is objectively unpleasant but culturally defensible." },
+  { p: ["it's very filling", "very hearty", "that was filling"], t: "There was far too much of it. Or it was stodgy. Either way, 'filling' is not a compliment about flavour.", pol: 60, tip: "When a British person describes food as 'filling' rather than 'delicious', the food was adequate but uninspiring." },
+  { p: ["we should split the bill", "shall we split it", "let's go halves"], t: "I have calculated exactly what I owe and it's less than half, but I'm being fair about it.", pol: 50, tip: "The British bill-split is a complex dance of mental arithmetic and suppressed resentment." },
+  { p: ["no, i insist", "please, i insist", "i insist"], t: "We are now in the British payment dance. I will offer three times. You must resist twice, then accept. These are the rules.", pol: 60, tip: "The insistence ritual has exactly three rounds. Giving in on the first offer is too eager. Refusing all three is rude." },
+  { p: ["i'll just have a starter", "nothing for me thanks", "i'm not that hungry", "i've already eaten", "i'll just have a salad"], t: "I may well be hungry but social anxiety, politeness, or not wanting to be the most expensive orderer has overridden my appetite.", pol: 65, tip: "The British relationship with ordering food in groups is fraught with unspoken rules about not seeming greedy." },
+  { p: ["everything was fine thank you", "yes fine thanks", "it was lovely thank you"], t: "The waiter asked how my meal was and social protocol requires me to say it was fine regardless of whether it was actually fine.", pol: 65, tip: "No British person has ever sent food back willingly. They would rather eat something terrible than cause a scene." },
+  { p: ["mushy peas", "chip butty", "beans on toast", "full english"], t: "These are genuine British food staples and they are not being ironic about enjoying them. This is sincere.", pol: 15, tip: "Never mock a British person's comfort food. Beans on toast is sacred and they will defend it to the death." },
+
+  // ── Neighbours & home ──
+  { p: ["we keep ourselves to ourselves", "they keep themselves to themselves"], t: "This is the highest compliment a British person can pay a neighbour. It means 'they don't bother us and we don't bother them'. Perfection.", pol: 50, tip: "The ideal British neighbour is one you barely know exists. This is genuine praise." },
+  { p: ["the neighbours are quite noisy", "a bit noisy", "they can be a bit loud"], t: "The neighbours are unbearably loud and I am considering moving house to escape them.", pol: 80, tip: "'Quite noisy' about neighbours means 'I can hear every word of their arguments and I hate it'." },
+  { p: ["nice area", "lovely area", "nice neighbourhood"], t: "This could be genuine or it could be the most British way of saying 'it's not as bad as I expected'. Context matters.", pol: 55, tip: "Listen for what comes after. 'Nice area' followed by 'isn't it?' = genuine. Followed by silence = diplomatic." },
+  { p: ["it's got character", "lots of character", "characterful", "it's got potential"], t: "It's old, falling apart, or in need of serious work. 'Character' and 'potential' are estate agent code for 'problems'.", pol: 70, tip: "'Character' in British property means 'original features that are actually structural deficiencies'." },
+  { p: ["it's cosy", "very cosy", "nice and cosy", "bijou"], t: "It's tiny. Extremely small. But I'm being generous about the square footage.", pol: 65, tip: "'Cosy' is the British estate agent's favourite word for 'you can touch both walls from the middle of the room'." },
+  { p: ["it needs a bit of updating", "could do with a lick of paint", "needs some tlc"], t: "It needs a complete renovation. The plumbing is from the 1970s and the kitchen is a museum piece.", pol: 75, tip: "'A lick of paint' is the British minimisation of what is actually a five-figure building project." },
+  { p: ["the garden's a good size", "nice garden"], t: "This is either genuine (the British take gardens very seriously) or code for 'the house is small but at least there's outdoor space'.", pol: 45, tip: "Gardens are one of the few things the British are genuinely enthusiastic about. This might actually be honest." },
+
+  // ── Customer service & shopping ──
+  { p: ["sorry to bother you", "excuse me, sorry", "sorry, could i just"], t: "I need something from you and I'm apologising in advance for the inconvenience of being a customer.", pol: 75, tip: "The British customer apologises for existing, then politely asks for the thing they're literally paying for." },
+  { p: ["it's not quite what i ordered", "this isn't quite right", "i think there might be a mix-up"], t: "This is completely wrong. You gave me the wrong thing entirely. But I'm going to act like it's a minor cosmic misunderstanding rather than your mistake.", pol: 85, tip: "A British person saying their order 'isn't quite right' could mean they received an entirely different meal." },
+  { p: ["could i possibly get a refund", "i don't suppose i could get a refund", "is there any chance of a refund"], t: "I want a refund. I am legally entitled to a refund. But I'm going to ask for it like I'm requesting an audience with the King.", pol: 82, tip: "The British ask for refunds like they're asking to borrow the Crown Jewels. The amount of hedging is extraordinary." },
+  { p: ["just browsing", "just looking thanks", "just having a look"], t: "Please do not talk to me. I am in a shop and I want to be left completely alone. If I need help, I will find you. I won't.", pol: 60, tip: "'Just browsing' is the British force field against shop assistants. It means 'maximum personal space please'." },
+  { p: ["do you have this in a different size", "have you got this in", "do you have any more in the back"], t: "I want this specific thing and I'm being very British about expressing a consumer desire.", pol: 50, tip: "This is usually straightforward. The British can be surprisingly direct when shopping. It's one of the safe zones." },
+  { p: ["i'll leave it for now", "i'll think about it actually", "i'll come back", "i might come back for it"], t: "I am not buying this. I will not be coming back. But I can't bring myself to just say 'no thanks' and walk away.", pol: 70, tip: "'I'll come back for it' is the shopping equivalent of 'we should do lunch'. It's never happening." },
+  { p: ["it's a bit pricey", "a bit steep", "bit expensive", "not cheap is it"], t: "It is outrageously overpriced and I am genuinely shocked at the cost.", pol: 68, tip: "'A bit pricey' is the British way of saying 'I would rather go without than pay that amount of money'." },
+  { p: ["that's a bargain", "what a bargain", "absolute bargain"], t: "Genuine enthusiasm! The British love a bargain. This is honest, joyful approval of a good price.", pol: 20, tip: "Bargain-spotting brings out genuine British emotion. This is real happiness." },
+  { p: ["the customer is always right"], t: "No British person actually believes this. Staff think it's nonsense. Customers use it as a weapon. It's a cultural fiction.", pol: 50, tip: "If someone says this in Britain, they're either being sarcastic or they're about to be unreasonable." },
+  { p: ["can i speak to the manager", "i'd like to speak to a manager", "could i speak to someone senior"], t: "I have been pushed beyond my considerable British tolerance and I am now escalating. This is serious.", pol: 60, tip: "A British person asking for the manager has already exhausted all polite options. They've crossed the Rubicon." },
+
+  // ── Driving & transport ──
+  { p: ["sorry, was that my right of way", "after you", "no, you go", "no no, after you"], t: "It WAS my right of way and you just took it, but I'm going to be magnanimous about your poor driving.", pol: 70, tip: "The British 'after you' at a junction is often an act of restrained fury disguised as courtesy." },
+  { p: ["bit of traffic", "traffic was a nightmare", "traffic's a bit slow"], t: "The roads were apocalyptic. I sat in motionless gridlock questioning every life choice that led me to this journey.", pol: 65, tip: "'A bit of traffic' covers everything from 'slightly busy' to 'the M25 has become a car park'." },
+  { p: ["running a bit late", "i'm five minutes away", "nearly there", "just round the corner"], t: "I am significantly later than 'a bit'. 'Five minutes away' means at least fifteen. 'Nearly there' means I've barely left.", pol: 70, tip: "'Five minutes away' is the most commonly told lie in British transportation. Double it at minimum." },
+  { p: ["the trains are a bit rubbish", "trains are delayed again", "typical"], t: "The entire rail network is a source of constant, deep, national disappointment that I have reluctantly accepted.", pol: 50, tip: "Complaining about trains is Britain's unofficial national sport. It unites all classes and regions." },
+  { p: ["it's only a short walk", "not far to walk", "easy walk"], t: "It is further than I'm making it sound. Possibly much further. My definition of 'short' may differ from yours.", pol: 55, tip: "A British 'short walk' can be anything from two minutes to half an hour. Always ask for the actual distance." },
+  { p: ["it's a nice drive", "lovely drive", "scenic route"], t: "The journey is long but I'm reframing it as a positive experience to make it seem less tedious.", pol: 55, tip: "'Scenic route' often means 'the slow way, but I'm pretending it was a choice'." },
+  { p: ["i know a shortcut", "there's a quicker way", "i'll go the back way"], t: "This route may or may not be quicker, but I'm committed to it now and my pride won't let me turn back.", pol: 40, tip: "The British shortcut: 50% chance it saves time, 50% chance you end up on a single-track farm road." },
+
+  // ── Dating & relationships ──
+  { p: ["i think we should just be friends", "you're really nice but", "you're lovely but"], t: "I am not attracted to you. This is a gentle no. 'Nice' and 'lovely' are doing rejection duty here.", pol: 80, tip: "The British rejection: compliment, then 'but', then letdown. The compliment is real but irrelevant." },
+  { p: ["it's not you, it's me", "i just need some space", "i need to find myself"], t: "It is absolutely you. Or at least partially you. But I'm taking the blame to be kind.", pol: 85, tip: "The most British of breakup lines. They're lying to spare your feelings, which is oddly considerate." },
+  { p: ["we need to talk", "can we talk"], t: "Something is very wrong in this relationship and this conversation will not be fun for either of us.", pol: 65, tip: "'We need to talk' is the relationship version of 'can I have a word'. The formality signals gravity." },
+  { p: ["they're nice looking", "nice looking", "pleasant looking"], t: "They are not particularly attractive but I'm trying to find something positive to say about their appearance.", pol: 70, tip: "'Nice looking' is the lukewarm end of the British attractiveness scale. 'Gorgeous' is the other end." },
+  { p: ["they've got a good personality", "great personality", "lovely personality"], t: "I'm pointedly not commenting on their appearance, which tells you everything about their appearance.", pol: 72, tip: "When the first compliment is about personality, the British person has made a deliberate choice not to mention looks." },
+  { p: ["we're just good friends", "nothing's going on", "we're just friends"], t: "Something might be going on, or I wish something was going on, or genuinely nothing is going on. All three are equally likely.", pol: 55, tip: "The British 'just friends' is the most ambiguous phrase in the language. Trust nothing." },
+  { p: ["i'll text you", "i'll give you a call", "i'll drop you a line"], t: "I may or may not contact you. This is a non-committal goodbye that keeps all options open while promising nothing.", pol: 65, tip: "'I'll text you' is the modern British 'we should do lunch'. It might happen. Don't hold your breath." },
+
+  // ── Health & wellbeing ──
+  { p: ["i'm fine, just tired", "just a bit tired", "just tired"], t: "I may be tired, but 'tired' is also the British catch-all for stressed, anxious, sad, overwhelmed, or hungover.", pol: 65, tip: "'Tired' is the emotional umbrella word. It covers everything the British don't want to actually talk about." },
+  { p: ["it's just a scratch", "it's nothing", "just a bump", "i'll live"], t: "It might actually be serious but I would rather bleed quietly than make a fuss about it.", pol: 70, tip: "The British pain threshold for seeking medical help is astronomically high. 'Just a scratch' could need stitches." },
+  { p: ["i'm feeling a bit under the weather", "under the weather", "a bit peaky", "feeling a bit rough"], t: "I am properly ill. But 'ill' sounds dramatic and British people don't do dramatic when it comes to their own suffering.", pol: 70, tip: "'Under the weather' covers everything from a slight cold to needing hospitalisation." },
+  { p: ["soldier on", "i'll soldier on", "just have to get on with it", "keep calm and carry on"], t: "I am suffering but I refuse to acknowledge it because complaining about personal problems is not the British way.", pol: 60, tip: "'Soldier on' is the British approach to everything from a cold to a crisis. Suffer quietly and make tea." },
+  { p: ["man flu", "he's got man flu"], t: "He has a cold and he's acting like he's dying. This is affectionate mockery of male illness behaviour.", pol: 30, tip: "'Man flu' is one of Britain's great cultural jokes. It's teasing, not cruel." },
+  { p: ["i should probably see a doctor", "might pop to the doctor", "might get it checked"], t: "I have been ignoring this problem for weeks or months and it has now reached a point where even British stoicism can't cope.", pol: 65, tip: "If a British person is considering seeing a doctor, the situation is serious. They don't go easily." },
+
+  // ── Family ──
+  { p: ["my mother means well", "she means well", "he means well", "they mean well"], t: "They are interfering, overbearing, or annoying, but I love them so I'm reframing it as good intentions.", pol: 70, tip: "'Means well' is the British diplomatic shield for family members who are driving them mad." },
+  { p: ["we don't talk about that", "we don't discuss that", "that's ancient history"], t: "Something significant happened and the family has collectively agreed to pretend it didn't.", pol: 75, tip: "The British family skeleton cupboard is locked, bolted, and has a wardrobe pushed in front of it." },
+  { p: ["family gathering", "family do", "family thing"], t: "An obligation I can't escape. My feelings about this range from mild dread to total resignation.", pol: 60, tip: "British enthusiasm for family events is often inversely proportional to the number of family members attending." },
+  { p: ["aren't they growing up fast", "haven't they grown", "doesn't time fly"], t: "I have nothing else to say about your children but social convention requires me to say something.", pol: 60, tip: "This is the British default comment about other people's children. It's never wrong and requires no actual knowledge of the child." },
+  { p: ["they're a character", "quite a character", "bit of a character"], t: "They are eccentric, difficult, or exhausting, but I'm framing it positively because they're family.", pol: 65, tip: "'A character' is the British family euphemism for someone who is hard work but loveable. Or just hard work." },
+  { p: ["it's complicated", "it's a long story", "that's a whole other story"], t: "I don't want to explain this because it involves family drama that would take three hours and a bottle of wine to fully unpack.", pol: 60, tip: "'It's complicated' means 'the full story would require a PowerPoint presentation and an emotional support animal'." },
+
+  // ── Workplace (expanded) ──
+  { p: ["let's take this offline", "let's discuss offline", "we can take this offline"], t: "This meeting is not the place for this conversation. Either it's too sensitive, you're embarrassing yourself, or I want to argue with you privately.", pol: 75, tip: "'Take it offline' is the British meeting ejector seat for topics that are too awkward, controversial, or long." },
+  { p: ["let's park that for now", "let's table that", "we'll come back to that"], t: "We are never coming back to that. Your point has been parked permanently in a car park with no exit.", pol: 80, tip: "'Park it' is the corporate version of 'I'll bear it in mind'. It means the topic is dead." },
+  { p: ["that's above my pay grade", "above my pay grade"], t: "I could deal with this but I don't want to, or I genuinely can't \u2014 either way, I'm passing the responsibility upward.", pol: 55, tip: "This is either honest delegation or a polite way of saying 'not my circus, not my monkeys'." },
+  { p: ["i'll circle back", "let me circle back", "i'll loop back", "circling back on this"], t: "I may or may not follow up. 'Circling back' is the corporate hamster wheel \u2014 lots of motion, uncertain destination.", pol: 70, tip: "'Circle back' is office speak for 'maybe later, maybe never'. Don't wait by the phone." },
+  { p: ["just to loop you in", "just looping you in", "keeping you in the loop"], t: "You should have been involved earlier but weren't. I'm now covering myself by including you belatedly.", pol: 65, tip: "Being 'looped in' often means decisions have already been made without you. You're being informed, not consulted." },
+  { p: ["touching base", "just touching base", "wanted to touch base"], t: "I need something from you but I'm disguising it as a friendly check-in.", pol: 65, tip: "'Touching base' is rarely just a catch-up. There's always an ask hidden inside the casual phrasing." },
+  { p: ["let's align on this", "we need to align", "are we aligned"], t: "You're doing something differently from what I want and I need you to do it my way.", pol: 75, tip: "'Alignment' in a British workplace means 'agreement with my preferred approach'." },
+  { p: ["just a gentle reminder", "a friendly reminder", "gentle nudge"], t: "This is neither gentle nor friendly. I've asked you before and you haven't done it. This is your final warning in polite disguise.", pol: 80, tip: "The gentler the reminder, the more frustrated they are. 'Gentle reminder' is basically gritted teeth." },
+  { p: ["as discussed", "as agreed", "as we discussed"], t: "I'm creating a paper trail. This email exists so that when things go wrong, I can prove we agreed on this.", pol: 65, tip: "'As discussed' is the British corporate equivalent of getting it in writing. It's a polite legal move." },
+  { p: ["happy to discuss further", "happy to chat about this", "my door is always open"], t: "I've said my piece. I doubt further discussion will change anything, but I want to appear collaborative.", pol: 70, tip: "'Happy to discuss' is often the full stop, not the comma. They've already made up their mind." },
+  { p: ["with immediate effect", "effective immediately", "as of now"], t: "This is serious and non-negotiable. The usual British hedging has been completely removed, which tells you everything.", pol: 30, tip: "When the British drop ALL softening language, pay very close attention. This is as direct as they get." },
+  { p: ["learning opportunity", "growth opportunity", "development opportunity", "a learning experience"], t: "Something went wrong \u2014 probably badly \u2014 and we're reframing the failure as education to avoid assigning blame.", pol: 72, tip: "'Learning opportunity' is what the British call a disaster once enough time has passed to be philosophical about it." },
+  { p: ["synergy", "synergies", "leverage the synergies"], t: "I'm using corporate jargon because I don't have a concrete plan but I want to sound like I do.", pol: 60, tip: "When British people start using American corporate jargon, they've either drunk the Kool-Aid or they're being ironic. Could go either way." },
+  { p: ["blue sky thinking", "think outside the box", "let's brainstorm"], t: "We have no idea what to do and we're hoping that if enough people talk for long enough, an answer will emerge.", pol: 55, tip: "British people use 'blue sky thinking' with varying degrees of sincerity and self-awareness." },
+  { p: ["bandwidth", "i don't have the bandwidth", "have you got bandwidth"], t: "'Bandwidth' means time/capacity. 'I don't have the bandwidth' means 'no' dressed up in tech metaphor.", pol: 65, tip: "Borrowed from tech, used by the British to make 'I'm too busy' sound more professional and less personal." },
+  { p: ["low-hanging fruit", "quick wins", "easy wins"], t: "Let's do the simple things first so it looks like we're making progress, even if the hard problems remain untouched.", pol: 50, tip: "'Low-hanging fruit' is the British corporate comfort food. It feels productive without being difficult." },
+  { p: ["let's be realistic", "let's manage expectations", "realistically speaking"], t: "Your expectations are too high and I'm about to lower them. Significantly.", pol: 70, tip: "'Let's be realistic' is the British prelude to disappointment. Brace yourself." },
+  { p: ["it's on my radar", "i've got it on my radar"], t: "I'm aware of it. That's all I'm committing to. Awareness, not action.", pol: 68, tip: "'On my radar' means 'I know about it'. It does NOT mean 'I'm doing anything about it'." },
+
+  // ── Weather (expanded) ──
+  { p: ["it's spitting", "it's spotting", "just spitting"], t: "It's raining lightly. The British have approximately 47 words for types of rain, and this is the mildest.", pol: 30, tip: "British rain vocabulary is the most nuanced in the world. 'Spitting' is barely rain. 'Chucking it down' is apocalyptic." },
+  { p: ["chucking it down", "bucketing down", "lashing it down", "pissing it down", "tipping it down"], t: "It's raining extremely heavily. This is genuine weather reporting, delivered with the drama it deserves.", pol: 25, tip: "Heavy rain is one of the few things the British will be emphatic about. They have strong feelings about precipitation." },
+  { p: ["not bad for the time of year", "good for the time of year"], t: "The weather is meeting the very low expectations I set for this season. I'm genuinely pleased.", pol: 35, tip: "British weather expectations are set so low that 'not bad' is a glowing review." },
+  { p: ["we could do with some rain", "garden needs a bit of rain"], t: "I am the only nationality on earth who would voluntarily request more rain. But the garden matters more than my comfort.", pol: 30, tip: "The British garden obsession occasionally overrides their hatred of rain. This is sincere." },
+  { p: ["flaming june", "so much for summer", "typical british summer"], t: "It's cold and/or rainy in what should be a warm month, and I'm expressing my disappointment through sarcasm.", pol: 40, tip: "British summer sarcasm is a national tradition. The expectations are always too high and reality always disappoints." },
+  { p: ["nice out", "nice out there", "lovely out"], t: "It's genuinely pleasant outside, by British standards. This is an event worth commenting on.", pol: 25, tip: "When a British person comments positively on the weather, the sun is probably actually shining. Mark the date." },
+  { p: ["scorching", "roasting", "absolutely boiling"], t: "It's above 25\u00B0C and the British are in full meltdown mode. To everyone else, this is 'pleasant'.", pol: 25, tip: "The British heat tolerance is remarkably low. 'Scorching' might mean 28\u00B0C. They mean it though." },
+  { p: ["brass monkeys", "absolutely freezing", "perishing"], t: "It's very cold. These are genuine, emphatic weather reports. The British reserve has been frozen out.", pol: 25, tip: "Cold weather complaints are always sincere. The British don't exaggerate about cold \u2014 they understate everything else but not this." },
+
+  // ── Queueing ──
+  { p: ["excuse me, i think i was next", "sorry, i think there's a queue", "i think there's a queue here"], t: "You just pushed in and I am absolutely FURIOUS, but I'm expressing my white-hot rage through the medium of polite suggestion.", pol: 90, tip: "Queue-jumping is the most serious social crime in Britain. This calm sentence conceals volcanic anger." },
+  { p: ["are you in the queue", "is this the queue", "sorry, are you queuing"], t: "A genuine question that also serves as a subtle assertion of queue order. I am monitoring the situation.", pol: 50, tip: "The British take queue integrity very seriously. This question is both practical and territorial." },
+  { p: ["sorry, the queue starts back there", "the queue's back there actually", "the back of the queue is over there"], t: "You have committed the cardinal British sin of queue-jumping and I am correcting you with barely contained outrage.", pol: 80, tip: "This is one of the few situations where a British person will directly confront a stranger. Queues are sacred." },
+
+  // ── Apology expanded ──
+  { p: ["sorry, do you mind if i", "sorry, would you mind", "sorry, is it ok if"], t: "I'm about to do something and I'm apologising for it in advance, even though what I'm doing is completely reasonable.", pol: 75, tip: "The pre-emptive British apology. They're sorry for having needs." },
+  { p: ["sorry, can i just squeeze past", "sorry, just need to get through", "excuse me, sorry"], t: "I need to physically move past you and I'm treating this like I'm asking permission to cross sovereign territory.", pol: 65, tip: "The British navigate physical space like diplomats. Every movement past another person requires verbal clearance." },
+  { p: ["i'm sorry to hear that", "oh i am sorry", "oh that's a shame", "what a shame"], t: "I feel genuine sympathy, but I'm expressing it in a measured, British way. This is actually heartfelt.", pol: 45, tip: "'I'm sorry to hear that' is usually sincere. It's one of the more honest British emotional expressions." },
+  { p: ["my apologies", "i do apologise", "please accept my apologies"], t: "This is a formal, genuine apology. The formality indicates they actually mean it \u2014 casual 'sorry' is reflexive, but formal apology is intentional.", pol: 55, tip: "The more formal the apology, the more genuine it tends to be. 'My apologies' outranks 'sorry' in sincerity." },
+
+  // ── Class & culture ──
+  { p: ["it's a bit common", "that's a bit common", "rather common"], t: "I consider this vulgar or lower-class, and I'm expressing my snobbery through the word 'common'.", pol: 65, tip: "'Common' in British English has strong class undertones. It's not a neutral word \u2014 it's a quiet judgement." },
+  { p: ["very middle class", "how middle class", "that's so middle class"], t: "I'm commenting on something being safe, conventional, or aspirational in a gently mocking way.", pol: 45, tip: "British people use 'middle class' as both an identity and a punchline. It's complicated." },
+  { p: ["gap yah", "year abroad", "travelling"], t: "A period of privileged exploration that the British are both envious of and quietly mocking. It depends who's speaking.", pol: 40, tip: "'Gap yah' (said with emphasis) is affectionate mockery. 'Gap year' (said normally) is neutral or genuine." },
+  { p: ["it's not cricket", "that's not cricket"], t: "That's unfair or unsportsmanlike. This is a genuine expression of moral disapproval using cricket as the benchmark of decency.", pol: 55, tip: "'Not cricket' means genuinely unfair. The British moral compass is calibrated to cricket." },
+  { p: ["stiff upper lip"], t: "Suppress your emotions and carry on. This is the British emotional philosophy in three words.", pol: 50, tip: "The 'stiff upper lip' is both a genuine cultural value and something the British are increasingly questioning." },
+
+  // ── Small talk ──
+  { p: ["keeping busy", "are you keeping busy", "keeping yourself busy"], t: "I'm making conversation and I don't know what else to ask. This is the British small talk emergency parachute.", pol: 45, tip: "'Keeping busy?' is the question British people ask when they've run out of weather to discuss." },
+  { p: ["same old same old", "nothing much", "not much", "oh you know", "can't complain"], t: "My life may or may not be interesting, but I'm not going to burden you with details because this is small talk, not therapy.", pol: 50, tip: "British small talk answers are designed to end the small talk. The goal is pleasant brevity." },
+  { p: ["long time no see", "it's been ages", "where have you been hiding"], t: "I've noticed your absence but I'm not going to make it awkward by asking why. This is a friendly re-entry point.", pol: 40, tip: "'Where have you been hiding?' is warm and casual. They genuinely missed seeing you, in a low-key British way." },
+  { p: ["small world", "what a small world", "isn't it a small world"], t: "Genuine surprise at a coincidence. This is one of the more honest British exclamations.", pol: 30, tip: "The British love a coincidence. 'Small world' is always genuine." },
+  { p: ["you'll never guess what", "guess what", "you won't believe this"], t: "I have gossip or news and I'm genuinely excited to share it. This is sincere enthusiasm.", pol: 25, tip: "When a British person is excited enough to build up to their story, it's worth listening. This is real." },
+
+  // ── Travel ──
+  { p: ["it was very touristy", "a bit touristy", "quite touristy"], t: "It was overrun with tourists and I did not enjoy it, even though I was also a tourist.", pol: 60, tip: "British people love to travel and then complain about other people who also travelled to the same place." },
+  { p: ["off the beaten track", "off the beaten path", "a hidden gem"], t: "I'm proud that I found something less mainstream and I want you to know about my superior travel choices.", pol: 40, tip: "'Hidden gem' means 'I found this before it got popular and I want credit for being adventurous'." },
+  { p: ["it's got a lot of history", "very historical", "steeped in history"], t: "It's old. This could be genuine enthusiasm (the British love old things) or a polite way of saying there's nothing else to recommend it.", pol: 50, tip: "The British genuinely love history. But 'lots of history' sometimes means 'and not much else'." },
+  { p: ["the locals were friendly", "very friendly people"], t: "I had a positive interaction with at least one local person and I was pleasantly surprised by this.", pol: 40, tip: "This is usually genuine. The British comment on friendliness because their own default is reserved, so warmth stands out." },
+  { p: ["it rained the whole time", "typical holiday weather", "the weather wasn't great"], t: "The holiday was significantly impacted by bad weather and I'm devastated but expressing it with British restraint.", pol: 55, tip: "British holiday weather complaints are among the most heartfelt things they say. Rain on holiday is a genuine tragedy." },
+
+  // ── Sports ──
+  { p: ["we were robbed", "absolute robbery", "daylight robbery"], t: "We lost and I refuse to accept it was fair. The referee, the universe, or fate conspired against us.", pol: 35, tip: "'We were robbed' is passionate, genuine sports outrage. They really believe it." },
+  { p: ["game of two halves", "it's a game of two halves"], t: "I'm stating something obvious about sport while adding absolutely no insight. This is filler commentary.", pol: 35, tip: "'Game of two halves' is the sports clich\u00E9 the British reach for when they have nothing meaningful to say." },
+  { p: ["there's always next year", "maybe next year", "next year is our year"], t: "I am in the acceptance stage of sporting grief. Hope has been deferred, as it always is.", pol: 50, tip: "'Next year' is the eternal British sports promise. It sustains fans through decades of disappointment." },
+  { p: ["they played well to be fair", "played well in fairness"], t: "They lost. But I'm being gracious about it, possibly because they're my team and I need to find a silver lining.", pol: 50, tip: "Praising a losing effort is the British way of coping with sporting disappointment while maintaining dignity." },
+  { p: ["we gave it a good go", "gave it their all", "they tried their best"], t: "We lost, but effort was visible, so I'm focusing on that rather than the result to manage my disappointment.", pol: 55, tip: "'A good go' is the consolation prize of British sports commentary. Effort over outcome." },
+  { p: ["it's coming home", "football's coming home"], t: "A mixture of genuine hope and ironic self-awareness. The British know they'll probably be disappointed, but they can't help believing.", pol: 30, tip: "The most British sports phrase ever: optimism and self-deprecation in perfect balance." },
+  { p: ["squeaky bum time"], t: "The tense, nerve-wracking final moments of a close match. A genuinely brilliant British sports expression.", pol: 30, tip: "Coined by Sir Alex Ferguson. One of the most vivid and honest phrases in British sports language." },
+
+  // ── Emotions (British style) ──
+  { p: ["i'm absolutely fine", "i'm fine really", "honestly i'm fine", "i'm fine, honestly"], t: "I am not fine. The repetition and emphasis are directly proportional to how not-fine I am.", pol: 80, tip: "The British 'I'm fine' protocol: say it once = possibly true. Say it with 'honestly' or 'really' = definitely not true." },
+  { p: ["i don't want to make a big deal of it", "it's not a big deal", "don't make a fuss"], t: "It IS a big deal to me. But British emotional restraint won't let me say that, so I'm minimising my own feelings.", pol: 75, tip: "When a British person tells you not to make a fuss, they secretly want you to acknowledge the fuss-worthy thing." },
+  { p: ["i'm over it", "water under the bridge", "it's in the past"], t: "I am absolutely not over it. It is very much NOT water under the bridge. I think about it regularly.", pol: 72, tip: "British people declare themselves 'over it' long before they're actually over it. The declaration is aspirational." },
+  { p: ["whatever", "meh", "don't care", "couldn't care less"], t: "I care. Possibly quite a lot. But admitting that feels too vulnerable, so I'm performing indifference.", pol: 40, tip: "British indifference is often a costume. The more aggressively they don't care, the more they probably do." },
+  { p: ["i'm not angry", "i'm not upset", "i'm not bothered"], t: "I am definitely experiencing the emotion I'm denying. The denial IS the confirmation.", pol: 70, tip: "In British emotional language, explicitly denying a feeling is the strongest possible confirmation of it." },
+  { p: ["it is what it is"], t: "I've accepted something disappointing and I've decided to stop fighting it. This is British philosophical resignation.", pol: 45, tip: "'It is what it is' is the British version of a zen koan. It means acceptance, not contentment." },
+  { p: ["these things happen", "worse things happen at sea"], t: "Something bad happened and I'm choosing perspective over emotion. This is me being brave about it.", pol: 55, tip: "Comparing your problem to maritime disasters is peak British coping. They're handling it the only way they know how." },
+  { p: ["chin up", "keep your chin up", "keep your pecker up"], t: "Stay positive! This is genuine British encouragement, delivered in the most restrained way possible.", pol: 40, tip: "British encouragement is real but understated. 'Chin up' genuinely means 'I believe you'll get through this'." },
+
+  // ── Technology ──
+  { p: ["have you tried turning it off and on again", "turn it off and on again"], t: "This is the British IT philosophy distilled into one sentence. It works embarrassingly often.", pol: 30, tip: "Thanks to The IT Crowd, this is now both genuine advice and a cultural reference. It's usually said with a knowing smile." },
+  { p: ["the wifi's a bit slow", "wifi's not great", "internet's a bit dodgy"], t: "The wifi is essentially non-functional and I am one buffering video away from a full emotional breakdown.", pol: 65, tip: "'A bit slow' internet in British means 'I've been staring at a loading screen long enough to question the meaning of life'." },
+  { p: ["it's a bit glitchy", "a bit buggy", "it's playing up"], t: "It's barely working. 'A bit glitchy' covers everything from a minor annoyance to complete system failure.", pol: 65, tip: "'Playing up' is the British term for technology that has decided to stop cooperating. It's always understated." },
+  { p: ["i'm not very good with technology", "i'm hopeless with computers", "i'm a bit of a technophobe"], t: "I cannot work this device and I'm pre-emptively lowering your expectations to avoid embarrassment.", pol: 55, tip: "British tech self-deprecation is often exaggerated but sometimes painfully accurate." },
+
+  // ── Compliments that aren't compliments (expanded) ──
+  { p: ["you look well", "you're looking well"], t: "This is usually genuine! 'Looking well' is a safe, honest British compliment about someone's general appearance or health.", pol: 35, tip: "'You look well' is one of the safer British compliments. It's usually sincere. Unless followed by 'have you put on weight?'" },
+  { p: ["haven't you done well", "haven't you done well for yourself"], t: "This could be genuine admiration or thinly veiled surprise that you succeeded. Tone is everything.", pol: 55, tip: "If said warmly, it's real pride. If said with raised eyebrows, it's 'I didn't expect much from you and you've exceeded my low bar'." },
+  { p: ["it suits you", "that suits you"], t: "This is usually a genuine compliment! One of the more reliable ones in the British arsenal.", pol: 30, tip: "'It suits you' is low-risk British praise. It's specific enough to usually be sincere." },
+  { p: ["you scrub up well", "scrubs up well", "you clean up nice"], t: "You look much better than usual. This is a compliment, but it carries the implication that your normal appearance is somewhat lacking.", pol: 40, tip: "'Scrub up well' is a backhanded compliment. They're impressed now, which implies they weren't before." },
+  { p: ["that's very you", "it's so you", "that's very on-brand"], t: "This could be a compliment or a polite way of saying 'that's exactly the kind of questionable choice I'd expect from you'. Depends on tone.", pol: 55, tip: "'Very you' is ambiguous by design. It lets the speaker avoid committing to whether 'you' is a good thing or not." },
+  { p: ["you've lost weight", "have you lost weight"], t: "I've noticed a change in your appearance and I'm commenting on it. In Britain this is considered a compliment. Whether it should be is debatable.", pol: 40, tip: "The British still consider this a compliment. The intent is usually kind, even if the execution is awkward." },
+  { p: ["you haven't changed a bit", "you haven't aged a day"], t: "This is genuine flattery. They're saying you look good for your age, which in British terms is high praise.", pol: 30, tip: "Usually sincere. The British don't throw around age compliments unless they mean them." },
+
+  // ── Parenting & children ──
+  { p: ["they're spirited", "very spirited", "a spirited child", "lively"], t: "This child is extremely energetic and possibly exhausting, but I'm being diplomatic about it.", pol: 70, tip: "'Spirited' is the polite British word for a child who has destroyed your living room in under five minutes." },
+  { p: ["they've got a mind of their own", "knows their own mind", "very independent"], t: "This child does not do as they're told. At all. And the parents are framing defiance as a personality trait.", pol: 65, tip: "'A mind of their own' is British parent code for 'stubborn and impossible to reason with'." },
+  { p: ["because i said so", "because i said so that's why"], t: "I have run out of logical arguments and I'm pulling rank. This is honest parental desperation.", pol: 25, tip: "The universal parenting trump card. It's as honest as British communication gets." },
+  { p: ["wait till your father gets home", "wait till your mother hears about this"], t: "I am unable or unwilling to deal with this myself, so I'm outsourcing discipline to the other parent.", pol: 45, tip: "Classic British parenting delegation. The threat is usually more effective than the actual follow-through." },
+  { p: ["they're at that age", "it's just a phase", "they'll grow out of it"], t: "This child's behaviour is challenging and I'm reassuring myself as much as anyone else that it's temporary.", pol: 55, tip: "'Just a phase' is the British parenting mantra. It provides hope that the current nightmare will eventually end." },
+
+  // ── Money ──
+  { p: ["i'm a bit skint", "a bit short", "bit strapped", "bit tight this month"], t: "I have very little money right now but I'd rather use slang than admit to genuine financial difficulty.", pol: 55, tip: "'A bit skint' covers everything from 'payday is tomorrow' to 'I'm eating beans on toast for the third day running'." },
+  { p: ["it's good value", "value for money", "good value for money"], t: "I'm satisfied with the price-to-quality ratio. The British take 'value' very seriously. This is genuine approval.", pol: 30, tip: "'Good value' is a sincere British compliment. The relationship between cost and quality has been deemed acceptable." },
+  { p: ["treat yourself", "go on, treat yourself"], t: "Permission to spend money. This can be genuine encouragement or enabling, depending on the financial context.", pol: 30, tip: "'Treat yourself' is the British permission slip for spending. It absolves guilt through social endorsement." },
+  { p: ["we'll split it", "let's go dutch", "shall we split"], t: "I want to pay only my share. This is usually fair and practical, not cheap.", pol: 40, tip: "The British have complex feelings about money-splitting. Offering to split is safe. Insisting on it can be read either way." },
+  { p: ["money can't buy happiness", "there are more important things than money"], t: "I'm trying to find perspective on not having enough money, or I'm genuinely expressing a value. Either way, they probably still want money.", pol: 45, tip: "Usually said by people who have enough money. Or by people trying very hard to cope with not having enough." },
+
+  // ── British idioms & expressions ──
+  { p: ["bob's your uncle", "and bob's your uncle"], t: "And there you go! It's that easy! Used to indicate something is simple or the conclusion is obvious.", pol: 20, tip: "'Bob's your uncle' is genuinely fun British English. It means 'and that's all there is to it'." },
+  { p: ["swings and roundabouts", "it's swings and roundabouts"], t: "The advantages and disadvantages roughly cancel each other out. It's a draw. A philosophical shrug.", pol: 40, tip: "'Swings and roundabouts' is British acceptance that life balances out. It's surprisingly zen." },
+  { p: ["horses for courses"], t: "Different things suit different people. What works for you might not work for me, and that's fine.", pol: 35, tip: "'Horses for courses' is a non-judgemental British way of acknowledging different preferences." },
+  { p: ["donkey's years", "for donkey's years", "in donkey's years"], t: "A very long time. Genuinely means ages. Simple and honest.", pol: 25, tip: "'Donkey's years' is charmingly direct. It just means a really long time." },
+  { p: ["bits and bobs", "odds and ends", "bits and pieces"], t: "Various miscellaneous things. This is genuinely vague and honestly means 'stuff I can't be bothered to list individually'.", pol: 30, tip: "'Bits and bobs' is an honest admission of vagueness. They literally mean miscellaneous things." },
+  { p: ["the penny dropped", "penny's dropped"], t: "I (or they) finally understood something that should have been obvious earlier. Genuine realisation.", pol: 35, tip: "A lovely British expression for a delayed 'aha!' moment. Always genuine." },
+  { p: ["in a nutshell", "to put it in a nutshell"], t: "I'm about to summarise. This is genuine and helpful. Possibly the most straightforward British phrase.", pol: 25, tip: "'In a nutshell' is refreshingly functional. They're being concise on purpose." },
+  { p: ["taking the biscuit", "that takes the biscuit", "takes the biscuit"], t: "That's the most outrageous or ridiculous thing I've encountered. Genuine disbelief or frustration.", pol: 40, tip: "'Takes the biscuit' is genuine British outrage expressed through the medium of baked goods." },
+  { p: ["piece of cake", "easy peasy", "doddle", "a doddle"], t: "It's easy! This is genuine and means exactly what it says. No hidden meaning.", pol: 20, tip: "The British are honest about things being easy. These expressions are all straightforward." },
+  { p: ["cost an arm and a leg", "costs a fortune", "costs a bomb"], t: "It's very expensive. This is honest and emphatic. They're genuinely shocked at the price.", pol: 30, tip: "British price complaints are always sincere. They mean it when they say it's expensive." },
+  { p: ["once in a blue moon", "hardly ever", "very rarely"], t: "This barely ever happens. It's a genuine expression of rarity.", pol: 30, tip: "Straightforward. No hidden meaning. It rarely happens and they're telling you so." },
+  { p: ["over the hill", "past it", "not as young as i used to be"], t: "Age-related self-deprecation. Usually fishing for reassurance or making a genuine, self-aware joke.", pol: 45, tip: "British age humour is usually self-directed and genuine. They might want you to disagree, though." },
+  { p: ["at a loose end", "at a loose end today", "twiddling my thumbs"], t: "I'm bored and have nothing to do. This is an honest admission and possibly an invitation to make plans.", pol: 35, tip: "If someone tells you they're 'at a loose end', they're genuinely free and possibly hoping you'll suggest something." },
+  { p: ["burning the midnight oil", "burning the candle at both ends"], t: "Working very late or overextending themselves. Usually genuine and possibly a cry for help disguised as a status update.", pol: 50, tip: "When a British person admits they're overworking, they might be hoping you'll tell them to stop." },
+  { p: ["the whole nine yards", "the full monty", "the lot"], t: "Everything. All of it. The complete package. This is genuine and emphatic.", pol: 25, tip: "'The full monty' means everything \u2014 not just the film. It's genuine completeness." },
+  { p: ["bog standard", "standard", "nothing fancy"], t: "Basic, ordinary, no frills. This is honest description, not criticism. Sometimes it's exactly what's wanted.", pol: 35, tip: "'Bog standard' is one of the most honest British descriptors. It means exactly average, no more, no less." },
+  { p: ["tickety-boo", "everything's tickety-boo", "all tickety-boo"], t: "Everything is going well! This delightfully old-fashioned expression is usually genuine.", pol: 25, tip: "'Tickety-boo' is too joyful to be sarcastic. If someone uses it, they're probably genuinely happy." },
+  { p: ["gobsmacked", "i was gobsmacked", "absolutely gobsmacked"], t: "I was completely and utterly astonished. This is genuine, vivid shock.", pol: 25, tip: "'Gobsmacked' is one of the most expressive words in British English. It's always genuine surprise." },
+  { p: ["skive", "skiving", "skiving off", "having a skive"], t: "Deliberately avoiding work or responsibility. It's cheeky and self-aware \u2014 they know they shouldn't be doing it.", pol: 30, tip: "'Skiving' is the British art of strategic laziness. It's always honest and usually self-deprecating." },
+  { p: ["having a natter", "a good natter", "a chinwag", "having a chinwag"], t: "Having a good chat. This is genuine and positive \u2014 they're enjoying the conversation.", pol: 20, tip: "'Natter' and 'chinwag' are warm words. The British use them for conversations they're actually enjoying." },
+  { p: ["faff about", "faffing about", "stop faffing", "faffing around"], t: "Wasting time, procrastinating, or being inefficient. An honest and frequently used British observation.", pol: 35, tip: "'Faffing' is one of the most useful British words. It perfectly describes unproductive busyness." },
+  { p: ["pottering about", "just pottering", "having a potter"], t: "Doing small, unhurried tasks around the house. This is genuine contentment. Pottering is a British art form.", pol: 20, tip: "'Pottering' is what the British do when they're genuinely relaxed. It's aimless, pleasant productivity." },
+  { p: ["crack on", "let's crack on", "crack on with it", "better crack on"], t: "Let's get started / get back to work / stop procrastinating. Genuine and motivational.", pol: 30, tip: "'Crack on' is the British 'let's do this'. It's honest, practical, and action-oriented." },
+  { p: ["get stuck in", "getting stuck in", "stuck in"], t: "Engage fully, commit, start doing it properly. This is genuine encouragement to participate.", pol: 25, tip: "'Get stuck in' is enthusiastic British English. They want you to fully commit." },
+  { p: ["take it with a pinch of salt", "pinch of salt", "grain of salt"], t: "Don't believe everything about this. I'm diplomatically suggesting the source might not be reliable.", pol: 50, tip: "'Pinch of salt' is a gentle British way of casting doubt without making accusations." },
+  { p: ["storm in a teacup", "tempest in a teapot"], t: "This fuss is disproportionate to the actual problem. People are overreacting.", pol: 45, tip: "The British perspective on disproportionate reactions, expressed through tea metaphors. Obviously." },
+  { p: ["i'll eat my hat", "i'll eat my hat if"], t: "I am extremely confident this won't happen. So confident I'm making a ridiculous wager.", pol: 30, tip: "'I'll eat my hat' is genuine confidence. They really don't think it's going to happen." },
+  { p: ["pardon my french", "pardon my language", "excuse my french"], t: "I just swore, or I'm about to swear, and I'm acknowledging that it's not ideal but I'm going to do it anyway.", pol: 40, tip: "'Pardon my French' is the British apology-in-advance for bad language. It's both self-aware and unapologetic." },
+  { p: ["touch wood", "fingers crossed", "here's hoping"], t: "I'm genuinely hopeful but superstitiously hedging my bets. This is honest optimism with a safety net.", pol: 30, tip: "British superstition is alive and well. 'Touch wood' is genuinely meant as a charm against bad luck." },
+  { p: ["better late than never", "at least you made it"], t: "You're late. I've noticed. I'm choosing to be gracious about it, but the acknowledgment is deliberate.", pol: 55, tip: "This is forgiveness with a footnote. They're being nice, but they want you to know they noticed the lateness." },
+  { p: ["on the bright side", "look on the bright side", "every cloud"], t: "Things are not going well, but I'm going to force some optimism into the situation whether it fits or not.", pol: 50, tip: "British forced optimism. The 'bright side' is usually a desperate search for silver linings in genuinely grey clouds." },
+  { p: ["can't win them all", "you win some you lose some", "that's life"], t: "Philosophical acceptance of a loss or setback. Genuinely stoic. This is the British processing disappointment in real time.", pol: 45, tip: "These phrases are the British emotional airbag. They cushion the impact of disappointment." },
+
+  // ── Miscellaneous extras ──
+  { p: ["age before beauty"], t: "I'm letting you go first and making a joke about it. Usually between friends. It's playful, not mean.", pol: 30, tip: "A cheeky classic. Tone determines whether it's affectionate teasing or a mild dig." },
+  { p: ["after you, no after you"], t: "We are now stuck in a British politeness deadlock. Neither of us will go first. This could last forever.", pol: 60, tip: "The British doorway standoff is a genuine cultural phenomenon. Both people would rather die than go first." },
+  { p: ["i'm just saying", "just saying", "all i'm saying is"], t: "I've just expressed a strong opinion and I'm now pretending it was casual and unimportant. It wasn't.", pol: 55, tip: "'Just saying' is the British opinion emergency exit. They've said what they think and now they want deniability." },
+  { p: ["end of", "end of story", "that's that", "that's final"], t: "I have made a decision and it is not open for discussion. This is rare British directness.", pol: 30, tip: "When a British person stops hedging and speaks in absolutes, they truly mean it." },
+  { p: ["no comment", "i couldn't possibly comment"], t: "I have a very strong opinion that I'm choosing not to share, which in itself tells you everything about my opinion.", pol: 70, tip: "'No comment' IS a comment. The refusal to speak speaks volumes." },
+  { p: ["funny you should say that", "funny you should mention that"], t: "It's not funny at all \u2014 I've been thinking about exactly the same thing and now I have a perfect segue to tell you about it.", pol: 40, tip: "Nothing is coincidental about what follows 'funny you should say that'. They've been waiting for this opening." },
+  { p: ["i'm easy going", "i'm laid back", "i go with the flow", "easy going"], t: "I have preferences and boundaries but I'd rather not state them upfront. I'll let you know when you cross them.", pol: 55, tip: "Self-described 'easy going' British people are often anything but. They just reveal their preferences passively." },
+  { p: ["life's too short", "life is too short"], t: "I'm using mortality as justification for doing something. This is genuine British philosophical permission-granting.", pol: 30, tip: "'Life's too short' is the British way of giving yourself or others permission to let something go or indulge." },
+  { p: ["back in my day", "in my day", "when i was young"], t: "I'm about to compare the present unfavourably with the past. Nostalgia with a side of mild criticism.", pol: 45, tip: "British nostalgia is a national pastime. 'Back in my day' is the preamble to a complaint about modernity." },
+  { p: ["it could be worse", "at least it's not", "on the plus side"], t: "It's bad. I know it's bad. But I'm going to find something even worse to compare it to, and that comparison will make me feel better.", pol: 55, tip: "British coping mechanism: measure your misery against a worse scenario and declare yourself lucky." },
+  { p: ["waste not want not", "every little helps", "look after the pennies"], t: "I'm being frugal and I want you to know it's a virtue, not a necessity. British thriftiness is a point of pride.", pol: 35, tip: "Thrift is a genuine British value. These phrases are usually sincere and often self-congratulatory." },
+  { p: ["you learn something new every day"], t: "I just learned something and I'm genuinely mildly interested. Or I'm being slightly condescending. Hard to tell.", pol: 45, tip: "This can go either way. If their eyebrows are up, they're genuinely interested. If they're flat, it's patronising." },
+  { p: ["mind your own business", "nosy", "nosy parker"], t: "You're asking about something that isn't your concern and I want you to stop. This is unusually direct for British English.", pol: 35, tip: "'Nosy parker' is a genuinely British way of telling someone to back off. It's direct by British standards." },
+  { p: ["that'll do", "that'll do nicely", "that will do"], t: "This is sufficient. It meets my requirements. 'That'll do' is the British rubber stamp of adequacy.", pol: 40, tip: "'That'll do' is genuine British satisfaction. It won't win awards, but it's good enough, and good enough is good." },
+  { p: ["i'm not one to gossip but", "i don't like to gossip but", "i shouldn't say this but"], t: "I am absolutely one to gossip and I'm about to prove it right now. The disclaimer is for my conscience, not yours.", pol: 50, tip: "The British gossip disclaimer. It changes nothing. They're going to tell you everything." },
+  { p: ["between you and me", "just between us", "don't tell anyone but"], t: "I'm sharing something confidential and I genuinely want you to keep it quiet. Or I want it spread \u2014 this is a gamble.", pol: 50, tip: "'Between you and me' is either genuine trust or a strategic leak. The British use both with equal frequency." },
+  { p: ["say no more", "enough said", "nuff said"], t: "I understand completely. No further explanation needed. This is genuine, efficient British comprehension.", pol: 30, tip: "'Say no more' is satisfying British shorthand for 'I get it'. It's always genuine." },
+  { p: ["chance would be a fine thing", "chance'd be a fine thing"], t: "I wish! But it's never going to happen. This is self-deprecating wistfulness.", pol: 45, tip: "A lovely, slightly sad British expression. They want something they know they can't have." },
+  { p: ["more fool me", "more fool you"], t: "I/you should have known better. Genuine self-criticism or gentle criticism of others.", pol: 40, tip: "'More fool me' is honest British self-reflection. They're taking responsibility for a mistake." },
+  { p: ["you do you"], t: "I disagree with your choice but I'm choosing not to fight about it. Do what you want. I'll judge quietly.", pol: 55, tip: "A modern British phrase that sounds supportive but often carries a whiff of resigned disapproval." },
+  { p: ["it's giving", "it's giving me"], t: "This reminds me of / has the energy of something. Modern British slang, usually genuine.", pol: 30, tip: "Newer British slang. It's borrowed from internet culture and is usually used sincerely." },
+  { p: ["absolutely not", "under no circumstances", "out of the question", "not a chance", "not on your life", "not in a million years"], t: "No. Clearly, firmly, and completely no. When the British drop all hedging, they really mean it.", pol: 20, tip: "Direct British 'no' without softening is rare and powerful. They absolutely mean it." },
+  { p: ["we don't do that here", "that's not how we do things", "that's not how things are done"], t: "You've broken an unwritten rule and I'm correcting you. The 'we' means 'everyone who isn't you'.", pol: 65, tip: "British cultural correction, delivered with the authority of unwritten social law." },
+  { p: ["when in rome"], t: "I'm adapting to the local customs. Or I'm using this phrase to justify doing something I wouldn't normally do.", pol: 35, tip: "'When in Rome' is the British cultural excuse card. It grants temporary permission to break your own rules." },
+  { p: ["let's agree to disagree", "we'll have to agree to disagree"], t: "I still think I'm right. You still think you're right. Neither of us is going to budge. Let's stop before this gets unpleasant.", pol: 60, tip: "The British diplomatic ceasefire. No minds were changed. Both parties retreat with their opinions intact." },
+  { p: ["it's the principle of the thing", "it's the principle"], t: "The actual stakes are low but my sense of fairness has been offended and I'm going to die on this hill.", pol: 45, tip: "When a British person invokes 'principle', they've committed to a fight that logic alone can't justify. It's emotional." },
+  { p: ["i rest my case"], t: "Something just happened that proves my point, and I'm feeling smug about it. Genuinely smug.", pol: 35, tip: "'I rest my case' is the British mic drop. They've been proven right and they want you to know it." },
+  { p: ["best not", "probably best not", "i'd rather not", "rather not"], t: "No. Definitely no. But I'm wrapping my refusal in gentle language so it sounds like a preference rather than a flat rejection.", pol: 70, tip: "'Rather not' is one of the firmest nos in British English. Don't push further." },
+  { p: ["each to their own", "each to their own i suppose", "takes all sorts"], t: "I disagree with or don't understand your choice, but I'm choosing tolerant bemusement over confrontation.", pol: 55, tip: "'Each to their own' is British tolerance at its most resigned. They disagree but they're letting it go." },
+  { p: ["not my circus not my monkeys", "not my problem", "nothing to do with me"], t: "I have deliberately distanced myself from this situation and I refuse to be drawn in.", pol: 40, tip: "British strategic detachment. They've decided this isn't their fight and they're sticking to it." },
+  { p: ["well well well", "well well"], t: "Something unexpected or ironic has happened and I'm savouring the moment before responding.", pol: 40, tip: "'Well well well' is the British dramatic pause. They're processing something and they want you to wait." },
+  { p: ["back to the drawing board", "back to square one"], t: "The plan failed and we need to start again. This is genuine acknowledgment of failure, delivered with British stoicism.", pol: 50, tip: "Honest acknowledgment that something didn't work. The British are good at regrouping after failure." },
+  { p: ["onwards and upwards", "onwards"], t: "Let's move past this setback and keep going. Genuine British resilience and optimism.", pol: 35, tip: "'Onwards and upwards' is the British rally cry. It's sincere determination after a setback." },
+  { p: ["happy days", "happy days!"], t: "Genuine minor celebration! Something good happened and I'm pleased about it.", pol: 20, tip: "'Happy days' is simple, honest British joy. Usually about something small but genuinely pleasing." },
+
+  // ═══════════════════════════════════════════════════════════
+  // BATCH 3: Final push to 500+
+  // ═══════════════════════════════════════════════════════════
+
+  // ── Email & messaging ──
+  { p: ["kind regards", "best regards", "warm regards"], t: "This email is now over. The warmth of the sign-off has no correlation with how I feel about you.", pol: 60, tip: "'Kind regards' is the default. 'Warm regards' means they like you. 'Regards' alone (no adjective) is chilly." },
+  { p: ["regards"], t: "This is the coldest professional sign-off in British email. They've deliberately removed the warmth modifier. Be concerned.", pol: 70, tip: "Bare 'Regards' without 'Kind' or 'Best' is the email equivalent of a slammed door." },
+  { p: ["many thanks", "thanks so much", "thanks ever so much"], t: "This is usually genuine gratitude! The British email thank-you is one of the more reliable expressions.", pol: 35, tip: "'Many thanks' is honest. It's one of the few email sign-offs that typically means what it says." },
+  { p: ["please find attached", "attached herewith", "please see attached"], t: "I have attached a file. This is one of the few genuinely functional British phrases with zero hidden meaning.", pol: 30, tip: "Finally, a British phrase that means exactly what it says. The attachment is there. That's it." },
+  { p: ["i hope this email finds you well", "hope you're well", "hope this finds you well", "i trust you are well"], t: "I don't especially care how this email finds you, but convention demands I open with a wellness check. On to business.", pol: 60, tip: "The British email opening is a required ritual. Nobody expects a genuine health update in response." },
+  { p: ["just a quick one", "just a quick email", "quick question"], t: "This will not be quick. The email that follows 'just a quick one' is invariably long, complex, or demanding.", pol: 65, tip: "'Quick one' is inversely proportional to the actual length and complexity of what follows." },
+  { p: ["as requested", "as you requested"], t: "You asked for this, so here it is. I may or may not agree it was necessary, but I'm complying.", pol: 55, tip: "'As requested' sometimes carries a subtle 'this was your idea, not mine' undertone." },
+  { p: ["i trust you'll", "i trust this will", "i trust we can"], t: "I'm telling you what I expect to happen, but framing it as trust to make it feel less like a demand.", pol: 72, tip: "'I trust' is confidence dressed as politeness. It's an expectation, not a hope." },
+  { p: ["do let me know", "please do let me know", "don't hesitate to reach out"], t: "I'm wrapping up this exchange. You CAN contact me, but ideally you won't need to because I've covered everything.", pol: 60, tip: "'Don't hesitate to reach out' is theoretically welcoming but practically a sign-off. It's a door that's technically open." },
+
+  // ── Texting / informal messages ──
+  { p: ["lol", "haha", "ha"], t: "A brief acknowledgment of humour. The number of 'ha's is significant: 'ha' = not funny. 'haha' = amused. 'hahaha' = genuinely laughing.", pol: 25, tip: "British text laughter is precisely calibrated. One 'ha' is devastating. Multiple 'ha's are warm." },
+  { p: ["x", "xx", "xxx"], t: "Kisses at the end of a message. The number matters: 'x' = standard. 'xx' = warmth. 'xxx' = close friend/family. No x = something is wrong.", pol: 30, tip: "The British x economy is complex. Suddenly dropping from 'xx' to 'x' is a declaration of war." },
+  { p: ["seen", "left on read", "read"], t: "They saw your message and chose not to respond. This is a power move, an oversight, or they're composing a careful reply. All equally likely.", pol: 55, tip: "Being left on read is the modern British silent treatment. It might be deliberate or they might just be making tea." },
+  { p: ["omw", "on my way", "leaving now"], t: "I have not yet left. I might not have even started getting ready. 'On my way' is aspirational, not geographical.", pol: 60, tip: "'On my way' in British texting means 'I'm aware I should be on my way'. It's a statement of intent, not location." },
+
+  // ── Seasons & holidays ──
+  { p: ["lovely christmas", "lovely christmas wasn't it", "nice christmas"], t: "This is genuine or polite \u2014 depends whether they follow up with details. Enthusiastic details = genuine. Quick change of subject = it was awful.", pol: 50, tip: "The British Christmas review is rarely honest in the first exchange. Wait for the second conversation for the real version." },
+  { p: ["quiet new year", "quiet one this year", "stayed in"], t: "I either genuinely preferred staying in, or I wasn't invited anywhere and I'm saving face.", pol: 55, tip: "'Quiet one' is the British dignity-preserver for NYE. It could be contentment or cover." },
+  { p: ["the clocks go back", "clocks going forward", "lost an hour"], t: "A genuine expression of the mild British trauma that happens twice a year. They care deeply about this hour.", pol: 30, tip: "The British relationship with clock changes is surprisingly emotional. That lost hour is genuinely mourned." },
+  { p: ["bank holiday", "long weekend", "bank holiday weekend"], t: "Genuine excitement! Bank holidays are sacred in British culture. This is real enthusiasm.", pol: 20, tip: "Bank holidays provoke genuine British joy. Planning for them starts weeks in advance." },
+  { p: ["barbeque weather", "bbq weather", "nice enough for a barbeque"], t: "It's above 18\u00B0C and not raining. By British standards, this is tropical. Fire up the grill.", pol: 20, tip: "The British BBQ threshold is remarkably low. A brief window of non-rain is enough to justify outdoor cooking." },
+
+  // ── Work-life balance ──
+  { p: ["living the dream", "living my best life"], t: "I am almost certainly not living the dream. This is sarcasm about my mundane daily existence. 90% of the time.", pol: 45, tip: "'Living the dream' is almost always ironic in British English. They're at their desk eating a sad sandwich." },
+  { p: ["another day another dollar", "same thing different day", "groundhog day"], t: "My routine is monotonous and I've accepted it with weary British resignation.", pol: 45, tip: "Work-related resignation expressed through clich\u00E9. They're fine with it, mostly. Probably." },
+  { p: ["tgif", "thank god it's friday", "nearly the weekend", "almost friday"], t: "Genuine relief and excitement. The British relationship with Friday is one of the most honest emotions they express.", pol: 20, tip: "Friday excitement is one of the most genuine British emotions. They really, truly mean this." },
+  { p: ["case of the mondays", "monday morning feeling", "it's only monday"], t: "Genuine dread. Monday is the British nemesis. This is honest despair disguised as a cultural joke.", pol: 40, tip: "Monday hatred is real and sincere in Britain. There is no irony in this complaint." },
+  { p: ["i need a holiday", "i need a break", "roll on the holidays"], t: "I am genuinely exhausted and fantasising about time off. This is a real cry from the soul.", pol: 35, tip: "When a British person says they need a holiday, they NEED a holiday. This isn't casual." },
+
+  // ── Complaining (a British art form) ──
+  { p: ["don't get me started", "don't even get me started"], t: "Please DO get me started. I have a LOT to say about this and I've been waiting for someone to ask.", pol: 40, tip: "'Don't get me started' is the British invitation to get them started. They want to rant. Let them." },
+  { p: ["i've had better", "i've seen better", "i've had worse"], t: "It was poor quality, but I'm expressing that through comparison rather than direct criticism.", pol: 60, tip: "'I've had better' is gentle British criticism. It doesn't condemn; it ranks. And the ranking is low." },
+  { p: ["it'll have to do", "it'll do i suppose", "that'll have to do"], t: "It's not what I wanted but I've given up trying to improve the situation. Resigned acceptance.", pol: 55, tip: "'It'll have to do' is the sound of British ambition quietly dying and being replaced by pragmatism." },
+  { p: ["typical", "just typical", "how typical"], t: "Something predictably disappointing has happened and I'm expressing weary recognition. I expected this and I'm still annoyed.", pol: 45, tip: "'Typical' is the British eye-roll in word form. Short, resigned, and genuine." },
+  { p: ["i've seen it all now", "now i've seen everything", "i've heard it all"], t: "Something so ridiculous has happened that I'm claiming I've reached peak absurdity. I'm genuinely exasperated.", pol: 40, tip: "British exasperation is always genuine when they claim to have 'seen it all'. They're truly baffled." },
+  { p: ["what's the world coming to", "the world's gone mad", "it's political correctness gone mad"], t: "I disapprove of a modern development and I'm expressing that through generalised cultural despair.", pol: 45, tip: "Broad societal complaints are a British speciality. The scope of the complaint rarely matches the size of the trigger." },
+  { p: ["in this day and age", "in this economy"], t: "I'm using the state of the world as context for my complaint to give it more weight and legitimacy.", pol: 50, tip: "'In this day and age' elevates a personal gripe to a civilisational concern. Classic British escalation technique." },
+
+  // ── Reactions & responses ──
+  { p: ["get away", "get out of it", "go on"], t: "I'm surprised or disbelieving, but in a friendly, engaged way. I want you to tell me more.", pol: 25, tip: "'Get away' is positive surprise. They're engaged and want the full story." },
+  { p: ["you're having me on", "you're joking", "no way", "you're kidding"], t: "I'm genuinely surprised and/or disbelieving. I need confirmation that what you said is real.", pol: 30, tip: "Genuine British surprise. They find what you said remarkable enough to question its truth." },
+  { p: ["shut up", "shut the front door", "shut up no way"], t: "I'm shocked and impressed, not telling you to be quiet! This is an expression of amazement.", pol: 20, tip: "'Shut up!' in British is paradoxically a request to keep talking. They're amazed and want more details." },
+  { p: ["as if", "as if!"], t: "I don't believe that / that's ridiculous / no way. Genuine incredulity.", pol: 30, tip: "'As if' is honest British disbelief. They think what was said is improbable or absurd." },
+  { p: ["fair play", "fair play to them", "fair play to you"], t: "Genuine respect for an achievement or decision. This is honest, unguarded British approval.", pol: 25, tip: "'Fair play' is one of the most sincere British expressions. They genuinely respect what was done." },
+  { p: ["good on you", "good on ya", "good for you mate"], t: "Genuine respect and approval. Unlike 'good for you' (condescending), 'good on you' is warm and sincere.", pol: 25, tip: "'Good on you' is the genuine version of 'good for you'. The difference is subtle but important." },
+  { p: ["classic", "that's classic", "absolute classic"], t: "Something has happened that is perfectly, predictably funny or ridiculous. Genuine amusement.", pol: 25, tip: "'Classic' is genuine British amusement at something perfectly fitting a known pattern." },
+  { p: ["standard", "standard!"], t: "Used ironically: this predictably bad thing has happened again. Used genuinely: this is normal. Context tells you which.", pol: 40, tip: "'Standard' as a reaction is usually ironic. It means 'of course this happened, because nothing goes right'." },
+  { p: ["awkward", "that's awkward", "bit awkward"], t: "A situation has become socially uncomfortable. The British are highly attuned to awkwardness and this is genuine.", pol: 40, tip: "The British awkwardness radar is extremely sensitive. If they're flagging it, the social discomfort is real." },
+  { p: ["cringe", "that's cringe", "a bit cringe"], t: "That's embarrassing to witness. Genuine second-hand embarrassment.", pol: 35, tip: "British people feel second-hand embarrassment very acutely. 'Cringe' is an honest reaction." },
+  { p: ["mega", "mega!", "that's mega"], t: "Genuinely great! An enthusiastic, informal stamp of approval.", pol: 20, tip: "'Mega' is honest informal enthusiasm. No hidden meanings." },
+  { p: ["wicked", "that's wicked"], t: "That's great/cool! Genuine approval, usually from younger speakers.", pol: 20, tip: "'Wicked' as praise is always sincere. It's enthusiastic British slang at its simplest." },
+  { p: ["sick", "that's sick"], t: "That's amazing/impressive! Modern slang, always positive when used this way.", pol: 20, tip: "'Sick' meaning 'great' is always genuine. Context makes it obvious \u2014 it's said with clear enthusiasm." },
+  { p: ["sound", "that's sound", "sound as a pound"], t: "Good, reliable, trustworthy, or agreed. A solid British stamp of approval.", pol: 20, tip: "'Sound' is honest, no-frills British approval. It means things are good and they're happy about it." },
+  { p: ["bang on", "spot on", "bang on the money"], t: "Exactly right! Perfectly accurate. Genuine agreement and approval.", pol: 20, tip: "'Spot on' and 'bang on' are always sincere. They mean you've got it exactly right." },
+  { p: ["on the nose", "hit the nail on the head", "nailed it"], t: "You got it exactly right. Precise and accurate. Genuine impressed agreement.", pol: 20, tip: "These are all honest compliments about accuracy. No hidden meanings." },
+  { p: ["i couldn't agree more", "absolutely right", "hear hear"], t: "Strong, genuine agreement. When a British person drops all hedging and agrees fully, they truly mean it.", pol: 20, tip: "Full-throated British agreement is rare and therefore powerful. They mean every word." },
+  { p: ["you've got a point", "fair point", "good point"], t: "I hadn't considered that angle and you're right. Genuine concession in a discussion.", pol: 35, tip: "'Fair point' is honest intellectual concession. They're genuinely acknowledging your argument has merit." },
+  { p: ["tell me about it", "you're telling me", "don't i know it"], t: "I completely relate to what you just said. This is genuine shared experience and solidarity.", pol: 25, tip: "Genuine empathy and agreement. They've experienced exactly the same thing and they feel your pain." },
+
+  // ── Specific situations ──
+  { p: ["let me get back to you on that", "i'll get back to you", "let me come back to you"], t: "I either need time to think, need to check with someone else, or I'm kicking this into the long grass hoping you'll forget.", pol: 70, tip: "Could be genuine or evasive. If they specify WHEN they'll get back to you, it's real. If not, it might be a polite dodge." },
+  { p: ["i've got a lot on my plate", "got a lot on", "bit swamped", "snowed under"], t: "I'm busy and possibly overwhelmed, but 'a lot on my plate' is more dignified than 'I'm drowning in work'.", pol: 55, tip: "Usually genuine. When a British person admits to being busy, they're probably genuinely stretched thin." },
+  { p: ["i'll sleep on it", "let me sleep on it"], t: "More genuine than 'I'll think about it'. They actually intend to consider this overnight. The answer could go either way.", pol: 55, tip: "'Sleep on it' is more promising than 'think about it'. They're genuinely undecided, which means there's hope." },
+  { p: ["it goes without saying", "needless to say", "obviously"], t: "I'm about to say the thing that supposedly doesn't need saying, because apparently it DOES need saying.", pol: 55, tip: "If it truly went without saying, they wouldn't be saying it. This phrase always precedes the very thing it claims is unnecessary." },
+  { p: ["i'm no expert but", "i'm not an expert but", "i could be wrong but"], t: "I'm fairly confident in what I'm about to say. The disclaimer is false modesty designed to make my point sound more palatable.", pol: 65, tip: "People who start with 'I'm no expert' are usually about to share a very firm opinion. The hedge is cosmetic." },
+  { p: ["to cut a long story short", "long story short", "to make a long story short"], t: "I'm about to attempt to be concise, but the story I've already told has probably been quite long. This is a late course-correction.", pol: 40, tip: "The British version of this rarely makes the story short. It just signals they're aware it's been going on a while." },
+  { p: ["at the risk of sounding", "i don't want to sound", "not to sound"], t: "I am about to sound exactly like whatever I'm disclaiming. The disclaimer changes nothing.", pol: 60, tip: "'At the risk of sounding rude' guarantees they're about to be rude. The risk is a certainty." },
+  { p: ["call it what you will", "say what you like", "think what you like"], t: "I've made up my mind and I don't care what label you put on it. Slight defiance.", pol: 45, tip: "A British person who says 'call it what you will' has stopped caring about your opinion on the matter." },
+  { p: ["you know what i mean", "know what i mean", "you know"], t: "I haven't fully articulated my point and I'm hoping our shared understanding will fill in the gaps.", pol: 35, tip: "British conversational shorthand. They're relying on mutual understanding rather than precise language." },
+  { p: ["if memory serves", "if i remember correctly", "if i'm not mistaken"], t: "I remember correctly and I'm not mistaken. This is a polite certainty dressed as uncertainty.", pol: 65, tip: "They remember. Their memory is serving just fine. The 'if' is theatrical modesty." },
+  { p: ["for what it's worth", "fwiw"], t: "I'm offering my opinion while simultaneously downplaying its importance. But I think it's worth quite a lot, actually.", pol: 55, tip: "'For what it's worth' is the British opinion wrapper. It sounds humble but the opinion inside is usually firm." },
+  { p: ["not gonna lie", "not going to lie", "ngl"], t: "I'm about to be unexpectedly honest. The fact that I'm flagging my honesty tells you something about my usual communication style.", pol: 35, tip: "'Not gonna lie' signals incoming sincerity. In British English, honesty apparently requires a warning label." },
+  { p: ["to be brutally honest", "if i'm being brutally honest", "brutal honesty"], t: "I've decided to temporarily suspend British politeness. Brace yourself for actual directness. This is rare.", pol: 30, tip: "When a British person warns you about 'brutal' honesty, they're about to be more direct than usual. By British standards, anyway." },
+  { p: ["it's giving me a headache", "it's doing my head in", "my head's spinning"], t: "This situation is genuinely stressful or confusing and I'm reaching my limit.", pol: 40, tip: "Head-related complaints in British are genuine expressions of stress or frustration." },
+  { p: ["i can't be dealing with this", "i can't deal with this", "i literally cannot"], t: "I've reached my limit. This is genuine exasperation. The British patience tank is empty.", pol: 35, tip: "When a British person explicitly says they can't deal, they really can't deal. The usual restraint has broken down." },
+  { p: ["what a carry on", "what a performance", "what a to-do"], t: "There was unnecessary drama, fuss, or complication and I'm commenting on the absurdity of it all.", pol: 45, tip: "'What a carry on' is genuine exasperation at how complicated something became. They're genuinely baffled by the fuss." },
+
+  // ═══════════════════════════════════════════════════════════
+  // BATCH 4: Final entries to reach 500
+  // ═══════════════════════════════════════════════════════════
+
+  // ── Education & school ──
+  { p: ["could try harder", "room for improvement", "needs to apply themselves"], t: "They're not putting in enough effort and the teacher is too polite to say 'lazy'.", pol: 75, tip: "British school report language is a masterclass in coded messaging. 'Could try harder' is the gentlest possible rebuke." },
+  { p: ["a pleasure to teach", "a delight to have in class"], t: "This is genuine! Teachers reserve this for students they actually enjoy teaching.", pol: 20, tip: "One of the few British report phrases that means exactly what it says." },
+  { p: ["works well in groups", "a team player"], t: "They can't or won't work independently. Needs other people to carry them.", pol: 70, tip: "Report code for 'doesn't do well alone'. Sounds positive, isn't entirely." },
+  { p: ["has a lively imagination", "very imaginative", "creative thinker"], t: "They daydream constantly, tell tall tales, or don't focus. But we're calling it creativity.", pol: 65, tip: "'Lively imagination' in a school report means the child's mind is everywhere except on the lesson." },
+  { p: ["is a popular member of the class", "popular with peers"], t: "They talk too much and distract everyone else, but they're well-liked so we're phrasing it positively.", pol: 60, tip: "'Popular' in a school report context often means 'too social for their own academic good'." },
+
+  // ── Garden & outdoors ──
+  { p: ["it needs a good tidy", "needs a tidy up", "bit overgrown"], t: "The garden is a jungle. It hasn't been touched in months. 'A bit overgrown' is hiding a wilderness.", pol: 65, tip: "British garden understatement. 'A bit overgrown' can mean you need a machete to reach the shed." },
+  { p: ["green fingers", "she's got green fingers", "he's got green fingers"], t: "They're genuinely good at gardening. This is sincere British praise for a highly valued skill.", pol: 20, tip: "'Green fingers' is always genuine. The British respect gardening talent enormously." },
+  { p: ["nice bit of lawn", "lovely garden", "cracking garden"], t: "Genuine admiration. The British take gardens extremely seriously. This is real, heartfelt praise.", pol: 20, tip: "Garden compliments are almost always sincere in Britain. It's one of the few topics where they drop all pretence." },
+  { p: ["been in the wars", "you've been in the wars"], t: "You look battered or beaten up (physically or metaphorically). Said with sympathy and mild humour.", pol: 35, tip: "'Been in the wars' is affectionate concern. They've noticed you're worse for wear and they care." },
+
+  // ── British TV / cultural references ──
+  { p: ["nice to see you to see you nice", "didn't he do well", "play your cards right"], t: "A British TV catchphrase. They're being playful and nostalgic. This is warm, genuine cultural bonding.", pol: 20, tip: "British TV catchphrases are used as cultural shorthand. Using one signals warmth and shared identity." },
+  { p: ["am i bovvered", "bovvered"], t: "Catherine Tate reference. They're being playfully defiant. It's a joke, not genuine rudeness.", pol: 25, tip: "A pop culture reference used for comic effect. They're channelling a character, not being genuinely rude." },
+  { p: ["computer says no"], t: "Little Britain reference meaning 'the system won't let me help you'. Used to express frustration with bureaucracy.", pol: 40, tip: "Used when rules or systems prevent common sense from prevailing. It's a joke about unhelpful officialdom." },
+  { p: ["keep your hair on", "keep your wig on", "calm down calm down"], t: "You're overreacting and I want you to relax. Said with varying degrees of sympathy and impatience.", pol: 35, tip: "'Keep your hair on' is a request to de-escalate. They think you're making too much of something." },
+
+  // ── Agreement & disagreement (expanded) ──
+  { p: ["you might be right", "you could be right", "you may have a point"], t: "You're probably right but I'm not quite ready to fully concede. Give me a moment to adjust.", pol: 65, tip: "'You might be right' from a British person is about 80% of the way to full agreement. They're almost there." },
+  { p: ["i take your point", "point taken"], t: "I understand your argument and it has some merit, but I haven't changed my position. Acknowledgment, not agreement.", pol: 60, tip: "'Point taken' means 'heard' not 'agreed'. Don't confuse the two." },
+  { p: ["yes and no", "it's a bit of both", "six of one half a dozen of the other"], t: "I'm refusing to take a side. Both options have merit and I'm diplomatically sitting on the fence.", pol: 55, tip: "British fence-sitting at its finest. They genuinely see both sides, or they're avoiding commitment." },
+  { p: ["not necessarily", "not exactly", "not quite"], t: "No. But I'm softening the 'no' until it barely resembles a 'no'. It's still a 'no' though.", pol: 72, tip: "British soft negatives. 'Not necessarily' means 'no'. 'Not exactly' means 'no'. 'Not quite' means 'no'." },
+  { p: ["that depends", "it depends", "well it depends"], t: "I'm about to introduce conditions that will almost certainly lead to a 'no', but I want it to feel like a journey rather than a dead end.", pol: 65, tip: "'It depends' is often the scenic route to 'no'. The conditions that follow are usually impossible to meet." },
+  { p: ["in theory", "theoretically", "in principle"], t: "In practice, no. But in the abstract, hypothetical world where everything is perfect, yes.", pol: 70, tip: "'In theory' is the British way of saying 'this won't work in reality but I can see the logic'." },
+  { p: ["i see where you're coming from", "i see your point", "i understand where you're coming from"], t: "I understand your position. I still disagree with it, but I understand it. Understanding is not agreement.", pol: 65, tip: "'I see where you're coming from' is empathy, not endorsement. They get your logic but reject your conclusion." },
+
+  // ── Domestic life ──
+  { p: ["the heating's on", "heating's on", "put the heating on"], t: "A seasonal declaration of significance. Turning the heating on is a big decision in a British household, often debated for weeks.", pol: 30, tip: "The 'heating debate' is a genuine British domestic drama. When to turn it on is a household-level political decision." },
+  { p: ["who left the lights on", "turn the lights off", "we're not made of money"], t: "Genuine parental energy conservation outrage. This is real frustration about electricity bills.", pol: 35, tip: "British parents have an almost spiritual relationship with light switches. Leaving lights on is a cardinal sin." },
+  { p: ["shoes off", "shoes off please", "we're a shoes-off house"], t: "Remove your footwear. This is non-negotiable and they feel strongly about it. Respect the carpet.", pol: 40, tip: "The shoes-on vs shoes-off divide is one of Britain's great cultural fault lines. Don't argue; just comply." },
+  { p: ["make yourself at home", "mi casa es su casa"], t: "Please be comfortable, but also please don't actually behave as if this is your home. There are limits.", pol: 55, tip: "'Make yourself at home' is a polite invitation with invisible boundaries. Don't raid the fridge." },
+  { p: ["sorry about the mess", "excuse the mess", "ignore the mess"], t: "The house is either immaculate and they're being falsely modest, or there IS a mess and they're genuinely embarrassed.", pol: 55, tip: "50% of the time the house is spotless and they're fishing for 'it's fine!' The other 50%, it's genuinely messy." },
+
+  // ── Apology culture (expanded) ──
+  { p: ["i owe you an apology", "i owe you one"], t: "I'm about to apologise properly. This is genuine and considered. A serious British apology is rare and meaningful.", pol: 45, tip: "When a British person formally announces an apology, it's sincere. The formality is the sincerity marker." },
+  { p: ["no hard feelings", "no hard feelings i hope"], t: "I hope we're okay after that disagreement. This is a genuine peace offering.", pol: 40, tip: "'No hard feelings' is a genuine British olive branch. They want to move past the conflict." },
+  { p: ["water under the bridge", "let's put it behind us"], t: "I'm trying to move on. Whether I've actually forgiven is a separate question I'm not addressing.", pol: 55, tip: "British forgiveness is declared rather than felt. 'Water under the bridge' is aspirational reconciliation." },
+
+  // ── Praise & appreciation (expanded) ──
+  { p: ["i really appreciate it", "really appreciate that", "i do appreciate it"], t: "Genuine gratitude. When the British add 'really' or 'do' to appreciation, they mean it sincerely.", pol: 30, tip: "The emphasis words ('really', 'do') signal genuine feeling. This is honest appreciation." },
+  { p: ["you're a star", "you're a legend", "you absolute legend"], t: "Genuine, warm, enthusiastic gratitude. This is as effusive as British praise gets and it's completely sincere.", pol: 15, tip: "'You're a legend' is peak British gratitude. They genuinely think you've done something exceptional." },
+  { p: ["you're a lifesaver", "absolute lifesaver"], t: "You've helped me enormously. This is genuine, heartfelt thanks.", pol: 20, tip: "'Lifesaver' is sincere British gratitude. They really needed help and you provided it." },
+  { p: ["i owe you one", "i owe you big time"], t: "Genuine acknowledgment of a favour. The British take debts of kindness seriously. They'll remember this.", pol: 25, tip: "When a British person says they owe you, they usually mean it. The social debt is real." },
+  { p: ["hat's off to you", "hats off", "take my hat off to you"], t: "Genuine respect and admiration for something you've achieved. Sincere British salute.", pol: 20, tip: "'Hats off' is always genuine. It's one of the most reliable British expressions of respect." },
+  { p: ["top marks", "full marks", "ten out of ten"], t: "Perfect score! Genuine, enthusiastic approval. They're genuinely impressed.", pol: 20, tip: "The British grading system applied to real life. 'Top marks' is sincere high praise." },
+  { p: ["couldn't have done it without you", "couldn't have done it better myself"], t: "Genuine praise and acknowledgment of your contribution. This is sincere teamwork appreciation.", pol: 25, tip: "Honest acknowledgment that you were essential. The British don't say this lightly." },
+
+  // ── Miscellaneous final entries ──
+  { p: ["no rest for the wicked", "no peace for the wicked"], t: "I'm busy and I'm making a wry joke about it. Resigned but not genuinely complaining.", pol: 35, tip: "Self-deprecating British busyness. They're tired but wearing it as a badge of honour." },
+  { p: ["stranger things have happened", "weirder things have happened"], t: "What you're suggesting is unlikely but not impossible. I'm being cautiously open-minded.", pol: 45, tip: "British conditional optimism. They're not dismissing the possibility entirely." },
+  { p: ["there's no accounting for taste", "each to their own taste"], t: "I think your taste is questionable but I'm wrapping my judgement in philosophical tolerance.", pol: 55, tip: "Sounds accepting, but this phrase exists specifically because they disagree with the taste in question." },
+  { p: ["what's done is done", "no use crying over spilt milk"], t: "Something regrettable happened but dwelling on it won't help. Pragmatic British acceptance.", pol: 45, tip: "Genuine stoicism. The British are good at accepting what can't be changed and moving forward." },
+  { p: ["you can't please everyone", "can't win them all"], t: "Someone is unhappy with me/us and I'm choosing not to let it bother me. Philosophical self-defence.", pol: 45, tip: "British self-consolation. They care more than they're letting on, but they're choosing pragmatism." },
+  { p: ["time will tell", "only time will tell"], t: "I don't know the answer and neither do you. Let's wait and see. Genuine uncertainty for once.", pol: 50, tip: "One of the rare moments of genuine British uncertainty. They honestly don't know how this will turn out." },
+  { p: ["it's on the tip of my tongue", "it'll come to me"], t: "I genuinely can't remember something and it's bothering me. This is honest frustration with their own memory.", pol: 30, tip: "Genuine. They're actually trying to remember and failing. The frustration is real." },
+  { p: ["i stand corrected", "you're right, i was wrong", "my mistake"], t: "Genuine admission of error. When a British person explicitly says they were wrong, it's sincere and it costs them.", pol: 35, tip: "A British person admitting they were wrong is a significant event. Acknowledge it graciously." },
+  { p: ["i'm all ears", "go on then", "i'm listening"], t: "I'm genuinely interested and giving you my attention. This is an invitation to continue.", pol: 30, tip: "'I'm all ears' is genuine engagement. They want to hear what you have to say." },
+  { p: ["you've made my day", "that's made my day", "absolutely made my day"], t: "Something genuinely good has happened and I'm sincerely happy about it. Real British joy.", pol: 20, tip: "'Made my day' is always genuine. The British don't deploy this phrase sarcastically." },
+  { p: ["i wouldn't change a thing", "i'd do it all again"], t: "Genuine contentment and no regrets. This is sincere British satisfaction.", pol: 20, tip: "When the British say they wouldn't change something, they're being honest. It's genuine peace." },
+  { p: ["it's all good", "all good", "we're all good"], t: "The situation is resolved, or I'm choosing to let something go. Usually genuine mild contentment.", pol: 35, tip: "'All good' is casual British resolution. Things are okay and they're moving on." },
+  { p: ["that's the spirit", "now you're talking", "that's more like it"], t: "Genuine encouragement! They approve of this new direction or attitude.", pol: 25, tip: "Honest British encouragement. They like what's happening and they want you to keep going." },
+  { p: ["what's the damage", "how much do i owe", "what do i owe you"], t: "How much does this cost? Usually asked with mild dread. The British relationship with bills is one of resigned acceptance.", pol: 40, tip: "'What's the damage' is always slightly nervous. They're bracing for the number." },
+  { p: ["spend a penny", "need the loo", "just popping to the loo", "powder my nose"], t: "I need to use the toilet. The British have invented approximately 200 ways to say this without actually saying it.", pol: 50, tip: "The British ability to circumnavigate the word 'toilet' is genuinely impressive." },
+  { p: ["couldn't eat another bite", "i'm stuffed", "i'm absolutely stuffed", "fit to burst"], t: "I've eaten too much. Genuine and usually said with satisfied contentment rather than regret.", pol: 25, tip: "Post-meal British contentment. 'Stuffed' is honest and usually followed by 'but I could manage pudding'." },
+  { p: ["i'll have what they're having", "that looks good", "ooh what's that"], t: "Genuine food/drink interest. The British are honest about wanting what someone else has ordered.", pol: 20, tip: "Food envy is one of the few British emotions expressed without any filter whatsoever." },
+];
+
+// Sort by pattern length (longest first) for matching priority
+const sortedPhrases = [];
+for (const entry of phrases) {
+  for (const pattern of entry.p) {
+    sortedPhrases.push({ pattern, entry });
+  }
+}
+sortedPhrases.sort((a, b) => b.pattern.length - a.pattern.length);
+
+
+// ── LAYER 2: Contextual pattern rules ──
+// These detect COMBINATIONS of words, not exact phrases
+
+// Dampeners: words that reduce the strength of what follows
+const dampeners = ['quite','rather','fairly','somewhat','a bit','a little','sort of','kind of','slightly','marginally','not entirely','a tad','a touch','mildly'];
+
+// Positive words that dampeners can modify
+const positiveWords = ['good','nice','well','happy','pleased','fun','exciting','impressive','tasty','pretty','beautiful','clever','smart','talented','interesting','lovely','wonderful','great','amazing','brilliant','fine','decent','enjoyable','pleasant','delightful','attractive','charming','elegant','superb','excellent','remarkable','outstanding','special','delicious','warm','friendly','helpful','kind','sweet','cute','cool','neat','perfect','ideal','fantastic','fabulous'];
+
+// Negative words that "a bit" amplifies
+const negativeWords = ['disappointing','annoying','frustrating','difficult','tricky','awkward','complicated','concerning','worrying','unfortunate','upsetting','confusing','rude','cold','harsh','steep','expensive','pricey','slow','late','early','odd','strange','weird','much','loud','quiet','small','big','long','short','far','dark','dull','boring','tired','cross','upset','angry','sad','lost','stuck','broken','wrong','off','rough','messy','chaotic','stressful','painful','uncomfortable','embarrassing','unexpected','problematic'];
+
+// Sincerity intensifiers (signal genuine meaning)
+const sincerityMarkers = ['absolutely','genuinely','truly','honestly','actually','really','properly','dead','well','bloody','bloomin','flipping','blinking','ruddy','proper'];
+
+// Hedging words (signal hidden meaning)
+const hedgingWords = ['perhaps','maybe','possibly','might','could','would','should','supposedly','apparently','presumably','arguably','potentially','conceivably','theoretically'];
+
+// False-positive adjectives (sound good but often aren't in British context)
+const falsePositives = ['interesting','nice','fine','good','brilliant','lovely','original','brave','ambitious','creative','unique','different','bold','novel','innovative','unusual','curious','remarkable','special','certain'];
+
+function analyzeContext(cleaned, words) {
+  const results = [];
+
+  // Rule 1: Dampener + positive word → they're softening a blow
+  for (const d of dampeners) {
+    if (cleaned.includes(d)) {
+      for (const p of positiveWords) {
+        const regex = new RegExp(`\\b${d.replace(/\s+/g, '\\s+')}\\s+${p}\\b`);
+        if (regex.test(cleaned)) {
+          results.push({
+            t: `When a British person says something is "${d} ${p}", they almost certainly mean the opposite. "${d.charAt(0).toUpperCase() + d.slice(1)}" is a dampener \u2014 it doesn't soften the positive, it quietly reverses it. They probably found it disappointing.`,
+            pol: 78,
+            tip: `"${d.charAt(0).toUpperCase() + d.slice(1)}" before a positive word is the British dimmer switch. It doesn't turn the lights down \u2014 it turns them off.`,
+            score: 8
+          });
+        }
+      }
+    }
+  }
+
+  // Rule 2: "a bit" / "slightly" + negative word → much worse than stated
+  const minifiers = ['a bit','a little','slightly','a tad','a touch','somewhat','mildly'];
+  for (const m of minifiers) {
+    if (cleaned.includes(m)) {
+      for (const n of negativeWords) {
+        const regex = new RegExp(`\\b${m.replace(/\s+/g, '\\s+')}\\s+${n}\\b`);
+        if (regex.test(cleaned)) {
+          results.push({
+            t: `"${m.charAt(0).toUpperCase() + m.slice(1)} ${n}" is a masterclass in understatement. They mean VERY ${n}. Extremely ${n}. Catastrophically ${n}. But they'd rather understate it than seem dramatic.`,
+            pol: 82,
+            tip: `"${m.charAt(0).toUpperCase() + m.slice(1)}" before a negative word means they're dialling the complaint down to about 10% of what they actually feel.`,
+            score: 9
+          });
+        }
+      }
+    }
+  }
+
+  // Rule 3: "not" + negative = genuine praise (understatement)
+  const notNegMatch = cleaned.match(/\bnot\s+(bad|terrible|awful|dreadful|horrible|rubbish|half bad|the worst|shabby|too shabby|unwelcome|unpleasant)\b/);
+  if (notNegMatch) {
+    results.push({
+      t: `"Not ${notNegMatch[1]}" is actually high praise! The British express approval by denying the negative rather than stating the positive. This is their way of saying it's genuinely good.`,
+      pol: 55,
+      tip: `British praise comes through double negatives. "Not ${notNegMatch[1]}" is basically a standing ovation.`,
+      score: 8
+    });
+  }
+
+  // Rule 4: "I'm afraid" + anything = bad news with zero actual fear
+  if (/\bi'?m afraid\b/.test(cleaned)) {
+    results.push({
+      t: "Whatever follows \"I'm afraid\" is bad news. They are not afraid. Fear has nothing to do with this. They're cushioning a blow and the cushion is the word 'afraid'.",
+      pol: 78,
+      tip: "\"I'm afraid\" is the British air-raid siren for incoming bad news. The 'afraid' is cosmetic.",
+      score: 7
+    });
+  }
+
+  // Rule 5: "Unfortunately" / "Regrettably" = not sorry at all
+  if (/\b(unfortunately|regrettably|sadly|alas)\b/.test(cleaned)) {
+    const word = cleaned.match(/\b(unfortunately|regrettably|sadly|alas)\b/)[1];
+    results.push({
+      t: `"${word.charAt(0).toUpperCase() + word.slice(1)}" is doing the work of appearing sympathetic while delivering news they've already accepted and moved on from. They aren't ${word === 'sadly' ? 'sad' : 'sorry'}.`,
+      pol: 70,
+      tip: `"${word.charAt(0).toUpperCase() + word.slice(1)}" at the start of a British sentence is the red carpet being rolled out for bad news.`,
+      score: 6
+    });
+  }
+
+  // Rule 6: "Just" + verb (wondering/thinking/asking/checking) = strong opinion incoming
+  const justMatch = cleaned.match(/\bjust\s+(wondering|thinking|asking|checking|curious|a thought|saying)\b/);
+  if (justMatch) {
+    results.push({
+      t: `"Just ${justMatch[1]}" is a lie. There is nothing casual about what follows. They have a strong opinion and they're disguising it as an idle musing.`,
+      pol: 72,
+      tip: `"Just" is the British camouflage word. Nothing that follows "just ${justMatch[1]}" is casual or spontaneous.`,
+      score: 7
+    });
+  }
+
+  // Rule 7: "Quite" alone (as a response) = genuinely impressed (the OTHER meaning of quite)
+  if (cleaned === 'quite' || cleaned === 'quite so' || cleaned === 'quite right') {
+    results.push({
+      t: "Used as a standalone response, 'quite' means 'I completely agree' or 'absolutely'. This is a different 'quite' from the dampener \u2014 this one is genuine agreement.",
+      pol: 30,
+      tip: "Standalone 'quite' is the opposite of 'quite + adjective'. On its own, it means full agreement.",
+      score: 10
+    });
+  }
+
+  // Rule 8: Multiple hedging words = very uncomfortable truth incoming
+  let hedgeCount = 0;
+  for (const h of hedgingWords) {
+    if (cleaned.includes(h)) hedgeCount++;
+  }
+  if (hedgeCount >= 2) {
+    results.push({
+      t: "This sentence is wrapped in so many layers of hedging that the actual meaning is almost invisible. Strip away the 'perhaps', 'might', 'possibly' and 'could' to find what they really think \u2014 which is almost certainly a firm opinion presented as a vague suggestion.",
+      pol: 85,
+      tip: "The more hedging words a British person uses, the stronger their actual opinion is. Each hedge adds certainty, not doubt.",
+      score: 7
+    });
+  }
+
+  // Rule 9: Sentence starting with "I mean" or "Well," = correction/disagreement
+  if (/^(well,|well\s|i mean)/.test(cleaned)) {
+    results.push({
+      t: "Starting with 'Well' or 'I mean' is the British warm-up stretch before disagreeing with you. Whatever follows is a correction or contradiction.",
+      pol: 60,
+      tip: "'Well...' is the sound of a British person winding up to contradict you as gently as possible.",
+      score: 5
+    });
+  }
+
+  // Rule 10: Questions that aren't questions ("Don't you think...?", "Wouldn't it be better...?")
+  if (/\b(don'?t you think|wouldn'?t it be better|isn'?t it|don'?t you agree|wouldn'?t you say|wouldn'?t you agree)\b/.test(cleaned)) {
+    results.push({
+      t: "This is not a question. It's an opinion dressed up as a question so you feel like you had a choice. You didn't. They've already decided.",
+      pol: 75,
+      tip: "British rhetorical questions are commands that end with a question mark. The expected answer is always 'yes'.",
+      score: 7
+    });
+  }
+
+  // Rule 11: "I'm sure" + positive about someone else = doubt/criticism
+  if (/\bi'?m sure (you|he|she|they)\b/.test(cleaned) && !cleaned.includes("my fault")) {
+    results.push({
+      t: "\"I'm sure\" followed by something about someone else is almost never sure. It's polite doubt. They're giving you the benefit of the doubt \u2014 and they want you to know how generous that is.",
+      pol: 82,
+      tip: "\"I'm sure you...\" means \"I doubt you...\" in every British context except genuine reassurance to close friends.",
+      score: 6
+    });
+  }
+
+  // Rule 12: Ending with "...but there we are" / "...but there you go" / "...but never mind"
+  if (/\b(but there we are|but there you go|but there we go|but never mind|but what can you do|but hey ho)\b/.test(cleaned)) {
+    results.push({
+      t: "Everything before this phrase was a complaint. This phrase is the British way of slamming the lid on their feelings and moving on with quiet, dignified resignation.",
+      pol: 55,
+      tip: "'But there we are' is the full stop on a British complaint. It means 'I've said my piece and I'm now choosing stoic acceptance'.",
+      score: 6
+    });
+  }
+
+  // Rule 13: "Literally" used for emphasis
+  if (/\bliterally\b/.test(cleaned) && !/\bliterally (just|the)\b/.test(cleaned)) {
+    results.push({
+      t: "They don't mean literally. Nobody British means literally. It's an intensifier that has fully divorced from its original meaning. Whatever they're describing probably happened, but not literally.",
+      pol: 30,
+      tip: "British 'literally' means 'figuratively but I want you to understand how strongly I feel'.",
+      score: 3
+    });
+  }
+
+  // Rule 14: "Can't be bothered" / "couldn't be bothered"
+  if (/\b(can'?t be bothered|couldn'?t be bothered|cba)\b/.test(cleaned)) {
+    results.push({
+      t: "Refreshingly honest! They don't want to do it and they're actually telling you directly. Treasure this rare moment of British bluntness.",
+      pol: 20,
+      tip: "'Can't be bothered' is one of the most honest phrases in British English. No subtext, no disguise.",
+      score: 7
+    });
+  }
+
+  // Rule 15: "Cheeky" + noun
+  if (/\bcheeky\s+\w+/.test(cleaned)) {
+    const cheekyMatch = cleaned.match(/\bcheeky\s+(\w+)/);
+    results.push({
+      t: `A "cheeky ${cheekyMatch[1]}" means they know they probably shouldn't, but they're going to anyway and they'd like you to find it endearing rather than irresponsible.`,
+      pol: 30,
+      tip: "'Cheeky' is the British way of giving themselves permission to be mildly naughty. It's always self-aware and usually harmless.",
+      score: 7
+    });
+  }
+
+  // Rule 16: "Reckon" = opinion
+  if (/\breckon\b/.test(cleaned)) {
+    results.push({
+      t: "'Reckon' means 'I think' or 'I believe', and it's usually genuine. It's an informal, honest opinion marker \u2014 less guarded than most British phrasing.",
+      pol: 35,
+      tip: "'Reckon' is casual and usually sincere. It's the British thinking-out-loud word.",
+      score: 4
+    });
+  }
+
+  return results;
+}
+
+
+// ── LAYER 3: Individual signal word analysis ──
+// When no phrase or pattern matches, look for individual words that carry British meaning
+
+const signalWords = {
+  nice: { t: "\"Nice\" is the most context-dependent word in British English. On its own about a thing, it's lukewarm at best. About a person, it often means boring. With genuine surprise (\"Oh, that's nice!\"), it's actually positive. Without context, assume mild indifference.", pol: 55, tip: "\"Nice\" is doing more work than any word should have to. Its meaning depends entirely on tone, context, and what comes before it." },
+  fine: { t: "\"Fine\" almost never means fine. It's the British verbal shrug \u2014 it conceals far more than it reveals. The real meaning ranges from 'acceptable' to 'terrible' depending on context.", pol: 65, tip: "'Fine' is the default setting when a British person can't face the truth. Or doesn't want to." },
+  interesting: { t: "They probably don't find it interesting at all. In British, \"interesting\" is often a holding word used when the real opinion is too negative to voice.", pol: 75, tip: "Watch the eyebrows. Real interest raises them. Fake interest keeps them perfectly still." },
+  lovely: { t: "\"Lovely\" is either genuine warmth or British autopilot. It's used so broadly that it can mean anything from real affection to 'I've heard you and I'm moving on'.", pol: 50, tip: "'Lovely' describes everything from a sunset to the fact that someone has handed them a receipt." },
+  brilliant: { t: "'Brilliant' on its own is usually just an acknowledgment \u2014 the British 'OK'. In conversation, it's less an opinion and more a verbal receipt.", pol: 45, tip: "'Brilliant' sounds enthusiastic but is usually just functional. Don't let it go to your head." },
+  quite: { t: "\"Quite\" is the master modifier of British English. Before a positive word, it usually dampens it (\"quite good\" = disappointing). On its own (\"Quite.\"), it means complete agreement. It's chaos.", pol: 70, tip: "'Quite' is doing some very quiet, very British damage. Or it's expressing full agreement. Context is everything." },
+  sorry: { t: "\"Sorry\" is a reflex, a greeting, an accusation, a request to repeat yourself, and an acknowledgment of shared space. Actual guilt is the least likely meaning.", pol: 55, tip: "The British say 'sorry' roughly 47 times per day. Approximately none are genuine apologies." },
+  right: { t: "\"Right\" can mean 'yes', 'I understand', 'I disagree', 'let's go', or 'I'm about to leave'. It's a one-word Swiss army knife.", pol: 40, tip: "Context and tone determine everything. 'Right' at the start of a sentence means 'moving on'. At the end, it means 'agreed?'" },
+  fair: { t: "\"Fair\" in British usually signals reluctant acceptance or forced agreement. 'Fair enough' means 'I disagree but I'm done arguing'.", pol: 55, tip: "\"Fair\" is the British word for 'I'll let this go, but I'm not happy about it'." },
+  honestly: { t: "When a British person says 'honestly', it implies that everything they said before this point may not have been entirely honest.", pol: 55, tip: "'Honestly' is the British honesty beacon \u2014 which raises the question of what all the other sentences were." },
+  apparently: { t: "\"Apparently\" means 'someone told me this and I don't believe it, but I'm passing it along so you know how ridiculous it is'.", pol: 50, tip: "'Apparently' in British is always slightly sarcastic. It signals doubt, not information." },
+  surely: { t: "\"Surely\" means 'I cannot believe this is happening and I think someone has made a mistake'. It's disbelief wearing a polite mask.", pol: 65, tip: "'Surely' is never a straightforward adverb. It's always expressing incredulity." },
+  actually: { t: "\"Actually\" is the British correction word. It means 'you're wrong and I'm about to fix that'. It can also mean genuine surprise.", pol: 55, tip: "'Actually' is the gentle British lead-in to telling you that you're mistaken." },
+  rather: { t: "\"Rather\" before a positive word is usually genuine, mild praise. Before a negative word, it's understatement. 'I'd rather not' means 'absolutely not'.", pol: 55, tip: "'Rather' is the polite cousin of 'quite'. It's usually a touch more sincere." },
+  perhaps: { t: "\"Perhaps\" is rarely uncertain. In British, it's often a command disguised as a suggestion, or a polite way of saying 'no'.", pol: 70, tip: "'Perhaps' in British is about as uncertain as a judge reading a verdict." },
+  possibly: { t: "\"Possibly\" usually means 'no' or 'I doubt it'. Genuine possibility is expressed with less hedging in British English.", pol: 65, tip: "'Possibly' is a politely wrapped 'probably not'." },
+  presumably: { t: "\"Presumably\" means 'I'm about to point out something you should already know, and I'm giving you one last chance to know it before I explain it to you'.", pol: 65, tip: "'Presumably' is gentle condescension. They're assuming your competence while doubting it." },
+  suppose: { t: "\"I suppose\" means reluctant, unenthusiastic agreement. They're going along with it but they want you to know they're not happy.", pol: 60, tip: "'I suppose' is agreement with all the enthusiasm drained out of it." },
+  keen: { t: "\"Keen\" is genuine enthusiasm when positive ('I'm keen'). But 'not keen' is a firm no disguised as mild reluctance.", pol: 50, tip: "'Keen' is one of the more honest British words. 'Not keen' is still a polite understatement though." },
+  fancy: { t: "\"Fancy\" means 'want' or 'like'. 'Do you fancy...?' is a genuine question. 'Fancy that' is mild surprise.", pol: 40, tip: "'Fancy' is casual and usually straightforward. A rare honest British word." },
+  reckon: { t: "\"Reckon\" signals an informal, usually genuine opinion. It's thinking out loud without the usual British filters.", pol: 35, tip: "'Reckon' is refreshingly honest. Low-pretence British." },
+  proper: { t: "\"Proper\" as an intensifier (\"proper good\", \"proper mess\") means genuinely, really, truly. It's an honesty amplifier.", pol: 30, tip: "When 'proper' is used as an intensifier, they really mean it. No games." },
+  bloody: { t: "\"Bloody\" is the classic British intensifier. It signals genuine feeling \u2014 frustration, emphasis, or exasperation. The filter is off.", pol: 25, tip: "'Bloody' means the British person has dropped the diplomatic act and is expressing real emotion." },
+  cheeky: { t: "\"Cheeky\" means playfully naughty or self-aware about bending the rules. It's always lighthearted.", pol: 25, tip: "'Cheeky' is the British permission slip for mild misbehaviour. It's endearing, not serious." },
+  dodgy: { t: "\"Dodgy\" means untrustworthy, suspicious, or of poor quality. It's a genuinely useful British warning.", pol: 35, tip: "'Dodgy' is real and honest. If a British person calls something dodgy, avoid it." },
+  gutted: { t: "\"Gutted\" means genuinely devastated. This is always sincere \u2014 nobody says 'gutted' sarcastically.", pol: 25, tip: "'Gutted' bypasses all British reserve. It's raw, genuine disappointment." },
+  chuffed: { t: "\"Chuffed\" means genuinely delighted. Like 'gutted', it's always sincere.", pol: 25, tip: "You cannot be sarcastically chuffed. This is real happiness." },
+  knackered: { t: "\"Knackered\" means absolutely exhausted. It's honest and direct \u2014 a rare British admission of vulnerability.", pol: 30, tip: "'Knackered' is genuine. They're tired and they're not hiding it." },
+  rubbish: { t: "\"Rubbish\" means bad, untrue, or terrible. This is direct British honesty. No hidden meanings.", pol: 20, tip: "'Rubbish' is refreshingly blunt for British English. They mean it." },
+  brilliant: { t: "Used as a standalone response, 'brilliant' usually just means 'OK, understood'. As a genuine compliment, it's warmer.", pol: 45, tip: "Context matters: enthusiastic 'Brilliant!' = real praise. Flat 'Brilliant.' = just acknowledging you." },
+  mental: { t: "\"Mental\" means crazy/unbelievable. It's always informal and usually expresses genuine disbelief.", pol: 30, tip: "'Mental' is honest British astonishment. The situation was genuinely unbelievable." },
+  naff: { t: "\"Naff\" means uncool, tacky, or a bit embarrassing. It's a gentle but honest criticism.", pol: 40, tip: "'Naff' is a very British judgement. Not harsh, but definitely not a compliment." },
+  miffed: { t: "\"Miffed\" means annoyed or irritated. It sounds mild but in British understatement terms, it means properly annoyed.", pol: 55, tip: "'Miffed' is the understated version of 'angry'. They're more upset than it sounds." },
+  posh: { t: "\"Posh\" means upper-class, fancy, or pretentious. It can be neutral, admiring, or mocking depending on tone.", pol: 40, tip: "'Posh' carries a lot of British class awareness. It can be an observation or a gentle dig." },
+};
+
+
+// ── MASTER TRANSLATION FUNCTION ──
+
+function findTranslation(input) {
+  const cleaned = input.toLowerCase().trim()
+    .replace(/[.!?,;:\u2026]+$/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"');
+
+  if (!cleaned) return null;
+
+  const words = cleaned.split(/\s+/);
+
+  // ── LAYER 1: Exact phrase matching (longest match wins) ──
+  for (const { pattern, entry } of sortedPhrases) {
+    if (cleaned.includes(pattern)) {
+      return { translation: entry.t, politeness: entry.pol, tip: entry.tip };
+    }
+  }
+
+  // ── LAYER 2: Contextual pattern analysis ──
+  const contextResults = analyzeContext(cleaned, words);
+
+  if (contextResults.length > 0) {
+    // Pick the highest-scoring result
+    contextResults.sort((a, b) => b.score - a.score);
+    const best = contextResults[0];
+    return { translation: best.t, politeness: best.pol, tip: best.tip };
+  }
+
+  // ── LAYER 3: Individual signal word analysis ──
+  // Find the most "interesting" signal word in the sentence
+  // Prioritise rarer/more meaningful signal words
+  const wordPriority = ['gutted','chuffed','knackered','dodgy','miffed','naff','mental','cheeky','keen','fancy','reckon','bloody','proper','rubbish','apparently','presumably','surely','perhaps','possibly','suppose','honestly','actually','rather','quite','sorry','interesting','fine','nice','lovely','brilliant','right','fair'];
+
+  for (const w of wordPriority) {
+    // Check the word exists as a whole word in the input
+    const regex = new RegExp(`\\b${w}\\b`);
+    if (regex.test(cleaned) && signalWords[w]) {
+      return { translation: signalWords[w].t, politeness: signalWords[w].pol, tip: signalWords[w].tip };
+    }
+  }
+
+  // ── LAYER 4: Structural analysis (is this even British?) ──
+
+  // Check for excessive politeness signals
+  const politeWords = ['please','thank','thanks','sorry','excuse','pardon','would you','could you','might i','may i','if you','kindly'];
+  let politeCount = 0;
+  for (const pw of politeWords) {
+    if (cleaned.includes(pw)) politeCount++;
+  }
+
+  if (politeCount >= 3) {
+    return {
+      translation: "This sentence contains a suspicious amount of politeness. In British English, excessive politeness is often inversely proportional to how the person actually feels. The more courteous the phrasing, the more likely they are seething beneath it.",
+      politeness: 85,
+      tip: "When the politeness is turned up this high, treat it like a warning signal. Something is being suppressed.",
+    };
+  }
+
+  // Check for any hedging at all
+  let hasHedge = false;
+  for (const h of hedgingWords) {
+    if (cleaned.includes(h)) { hasHedge = true; break; }
+  }
+  if (hasHedge) {
+    return {
+      translation: "There's hedging language in here, which suggests the speaker isn't being fully direct. In British English, hedging often conceals a stronger opinion than the words suggest. Whatever they 'perhaps' or 'might' think, they probably definitely think.",
+      politeness: 70,
+      tip: "Strip out the hedging words and re-read the sentence. That's closer to what they actually mean.",
+    };
+  }
+
+  // ── LAYER 5: Genuine / no-hidden-meaning fallback ──
+  // If we got here, the sentence doesn't contain British signals
+
+  const genuineFallbacks = [
+    {
+      translation: "Remarkably, this appears to be a sentence without hidden British meaning. They seem to be saying exactly what they mean. This is rare and should be appreciated.",
+      tip: "Not everything a British person says has a hidden meaning. Sometimes tea is just tea. But stay vigilant."
+    },
+    {
+      translation: "No British double-meaning detected. They appear to mean precisely what they said. Enjoy this moment of clarity \u2014 it won't last.",
+      tip: "The British are capable of directness. It's just not their factory setting."
+    },
+    {
+      translation: "This one seems genuinely straightforward. No dampeners, no hedging, no suspiciously excessive politeness. They meant what they said.",
+      tip: "When a British person IS being direct, trust it. The absence of politeness signals is itself a signal of sincerity."
+    },
+    {
+      translation: "Against all odds, this sentence appears to be exactly what it claims to be. No hidden meanings, no subtle digs, no elaborate politeness disguising disagreement. Just... words meaning words.",
+      tip: "Savour this. The British being straightforward is like a solar eclipse \u2014 it happens, but not often."
+    },
+    {
+      translation: "My British-to-English sensors are returning a clean reading. This appears to be a genuine, unfiltered statement. They meant what they said. Probably.",
+      tip: "The 'probably' is there because with British English, you can never be 100% sure. But this one looks safe."
+    },
+  ];
+
+  const fallback = genuineFallbacks[Math.floor(Math.random() * genuineFallbacks.length)];
+
+  return {
+    translation: fallback.translation,
+    politeness: 15,
+    tip: fallback.tip,
+  };
+}
+
+
+// ── Surprise me: pick from all phrase entries ──
+const allSurprisePhrases = phrases.map(e => e.p[0]);
+
+// ── Example chips ──
+const examplePhrases = [
+  "That's a very brave decision",
+  "Quite nice",
+  "I hear what you say",
+  "Not bad at all",
+  "There's been a slight hiccup",
+  "I'm sure it's my fault",
+  "Just a gentle reminder",
+  "Sorry",
+  "It's fine",
+  "How interesting",
+  "With all due respect",
+  "I was a bit disappointed",
+  "Fancy a pint?",
+  "You numpty",
+  "Living the dream",
+  "No rush",
+];
+
+// ── UI Logic ──
+const inputEl = document.getElementById('input');
+const resultSection = document.getElementById('result');
+const translationText = document.getElementById('translationText');
+const meterFill = document.getElementById('meterFill');
+const meterValue = document.getElementById('meterValue');
+const tipEl = document.getElementById('tip');
+const chipsContainer = document.getElementById('chips');
+
+// ── Profanity / offensive language filter ──
+// Base64-encoded to keep the source tidy. Decoded at runtime.
+const _fw = atob(
+  'YXNzLGFzc2hvbGUsYmFzdGFyZCxiaXRjaCxib2xsb2NrcyxidWdnZXIsY29jayxjcmFwLGN1bnQs'+
+  'ZGFtbixkaWNrLGRpY2toZWFkLGZhZyxmYWdnb3QsZnVjayxmdWNraW5nLGZ1Y2tlcixnb2RkYW1u'+
+  'LGhlbGwsamVyayxrbm9iLGtub2JoZWFkLG1pbmdlLG1vdGhlcmZ1Y2tlcixuaWdnZXIsbmlnZ2Es'+
+  'cGlzcyxwcmljayxwdXNzeSxzaGFnLHNoaXQsc2hpdHRpbmcsc2xhZyxzbHV0LHRpdCx0aXRzLHRv'+
+  'c3Nlcix0d2F0LHdhbmssd2Fua2VyLHdob3JlLHd0ZixzdGZ1LGZ1LGJzLHBvcm4seHh4LGJvbmVy'+
+  'LGRpbGRvLGphY2thc3MsZG91Y2hlLGRvdWNoZWJhZyxhcnNlLGFyc2Vob2xlLGJlbGxlbmQsbnVi'+
+  'LG5vYmhlYWQscGFlZG8scGVkbyxwZXJ2LHNwYXN0aWMsbW9uZyxyZXRhcmQscmV0YXJkZWQsZnJl'+
+  'YWssbG9zZXIsc2t1bGxmdWNrLGNsdXN0ZXJmdWNrLGNvY2tzdWNrZXIsYnVsbHNoaXQ='
+);
+const _blockedWords = new Set(_fw.split(','));
+
+// Also block common leet-speak / symbol evasion attempts
+function normalizeForFilter(str) {
+  return str
+    .replace(/[@]/g, 'a')
+    .replace(/[0]/g, 'o')
+    .replace(/[1!|]/g, 'i')
+    .replace(/[3]/g, 'e')
+    .replace(/[\$5]/g, 's')
+    .replace(/[7]/g, 't')
+    .replace(/[+]/g, 't')
+    .replace(/[*._\-]/g, '')
+    .replace(/(.)\1{2,}/g, '$1$1'); // collapse repeated chars: fuuuck → fuuck
+}
+
+// Mild British slang that's in our translation database — allow these
+const _allowedBritish = new Set([
+  'bloody','bloomin','blimey','crikey','bollocks','bugger','knackered',
+  'naff','dodgy','rubbish','sod','sodding','arse','git','minger','pillock',
+  'numpty','plonker','wally','berk','muppet','prat','nutter','daft','barmy'
+]);
+
+function containsOffensiveLanguage(text) {
+  const cleaned = normalizeForFilter(text.toLowerCase().replace(/['']/g, "'"));
+  const words = cleaned.split(/[\s,;:!?.]+/);
+
+  for (const word of words) {
+    // Strip trailing 's', 'ed', 'er', 'ing' for basic morphology
+    const stems = [word];
+    if (word.endsWith('s') && word.length > 3) stems.push(word.slice(0, -1));
+    if (word.endsWith('ed') && word.length > 4) stems.push(word.slice(0, -2));
+    if (word.endsWith('er') && word.length > 4) stems.push(word.slice(0, -2));
+    if (word.endsWith('ing') && word.length > 5) stems.push(word.slice(0, -3));
+    if (word.endsWith('ers') && word.length > 5) stems.push(word.slice(0, -3));
+
+    for (const stem of stems) {
+      if (_blockedWords.has(stem) && !_allowedBritish.has(stem)) return true;
+    }
+  }
+
+  // Also check for offensive words embedded with spaces/symbols stripped
+  const compacted = cleaned.replace(/\s+/g, '');
+  for (const bw of _blockedWords) {
+    if (bw.length >= 4 && !_allowedBritish.has(bw) && compacted.includes(bw)) return true;
+  }
+
+  return false;
+}
+
+const _blockedResponses = [
+  { translation: "A real British person would never say that out loud. They'd think it, make eye contact with a stranger on the bus, and share a knowing look. But say it? Absolutely not.", tip: "The British way is to express frustration through tutting, sighing, and aggressive tea-making. Try that instead." },
+  { translation: "That language would cause a British person to do a sharp intake of breath, look at the floor, and pretend they didn't hear it. Let's follow their example.", tip: "If you want to express strong feelings the British way, try: 'I'm not entirely thrilled' or 'That's a bit much'." },
+  { translation: "I'm afraid this translator only works with the kind of language you could use in front of someone's nan without her clutching her pearls.", tip: "British people have invented hundreds of ways to be rude without swearing. 'Bless' and 'How lovely for you' can carry more venom than any profanity." },
+  { translation: "Even the British, masters of creative insults, would raise an eyebrow at that phrasing. And a raised British eyebrow is a serious thing.", tip: "Try rephrasing with British restraint. Replace strong language with devastating understatement \u2014 it's far more effective." },
+  { translation: "This translator runs on tea and good manners, and that input is neither. Let's keep things civilised, shall we?", tip: "The most cutting thing a British person can say is usually the most polite-sounding. No bad language required." },
+];
+
+function showTranslation(text) {
+  // Check for offensive language first
+  if (containsOffensiveLanguage(text)) {
+    const blocked = _blockedResponses[Math.floor(Math.random() * _blockedResponses.length)];
+    translationText.textContent = `\u201C${blocked.translation}\u201D`;
+    meterFill.style.width = '0%';
+    meterValue.textContent = '\u2014';
+    meterFill.style.background = '#ccc';
+    tipEl.innerHTML = `<strong>Survival tip:</strong> ${blocked.tip}`;
+    resultSection.classList.remove('visible');
+    void resultSection.offsetWidth;
+    resultSection.classList.add('visible');
+    resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+
+  const result = findTranslation(text);
+  if (!result) return;
+
+  translationText.textContent = `\u201C${result.translation}\u201D`;
+
+  // Politeness meter
+  const p = result.politeness;
+  meterFill.style.width = p + '%';
+  meterValue.textContent = p + '%';
+
+  if (p > 80) {
+    meterFill.style.background = 'linear-gradient(90deg, #c8102e, #e8475f)';
+  } else if (p > 50) {
+    meterFill.style.background = 'linear-gradient(90deg, #d4a843, #e8c75e)';
+  } else {
+    meterFill.style.background = 'linear-gradient(90deg, #2d8a4e, #4aba6e)';
+  }
+
+  tipEl.innerHTML = `<strong>Survival tip:</strong> ${result.tip}`;
+
+  resultSection.classList.remove('visible');
+  void resultSection.offsetWidth;
+  resultSection.classList.add('visible');
+  resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Translate button
+document.getElementById('translateBtn').addEventListener('click', () => {
+  const text = inputEl.value.trim();
+  if (text) showTranslation(text);
+});
+
+// Enter key
+inputEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    const text = inputEl.value.trim();
+    if (text) showTranslation(text);
+  }
+});
+
+// Surprise me
+document.getElementById('surpriseBtn').addEventListener('click', () => {
+  const phrase = allSurprisePhrases[Math.floor(Math.random() * allSurprisePhrases.length)];
+  inputEl.value = phrase.charAt(0).toUpperCase() + phrase.slice(1);
+  showTranslation(phrase);
+});
+
+// Example chips
+examplePhrases.forEach(phrase => {
+  const chip = document.createElement('button');
+  chip.className = 'chip';
+  chip.textContent = phrase;
+  chip.addEventListener('click', () => {
+    inputEl.value = phrase;
+    showTranslation(phrase);
+    inputEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+  chipsContainer.appendChild(chip);
+});
+</script>
+
+</body>
+</html>
