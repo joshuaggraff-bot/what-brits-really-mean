@@ -1011,7 +1011,7 @@ const dampeners = ['quite','rather','fairly','somewhat','a bit','a little','sort
 const positiveWords = ['good','nice','well','happy','pleased','fun','exciting','impressive','tasty','pretty','beautiful','clever','smart','talented','interesting','lovely','wonderful','great','amazing','brilliant','fine','decent','enjoyable','pleasant','delightful','attractive','charming','elegant','superb','excellent','remarkable','outstanding','special','delicious','warm','friendly','helpful','kind','sweet','cute','cool','neat','perfect','ideal','fantastic','fabulous'];
 
 // Negative words that "a bit" amplifies
-const negativeWords = ['disappointing','annoying','frustrating','difficult','tricky','awkward','complicated','concerning','worrying','unfortunate','upsetting','confusing','rude','cold','harsh','steep','expensive','pricey','slow','late','early','odd','strange','weird','much','loud','quiet','small','big','long','short','far','dark','dull','boring','tired','cross','upset','angry','sad','lost','stuck','broken','wrong','off','rough','messy','chaotic','stressful','painful','uncomfortable','embarrassing','unexpected','problematic'];
+const negativeWords = ['disappointing','annoying','frustrating','difficult','tricky','awkward','complicated','concerning','worrying','unfortunate','upsetting','confusing','rude','cold','harsh','steep','expensive','pricey','slow','late','early','odd','strange','weird','much','loud','quiet','small','big','long','short','far','dark','dull','boring','tired','cross','upset','angry','sad','lost','stuck','broken','wrong','off','rough','messy','chaotic','stressful','painful','uncomfortable','embarrassing','unexpected','problematic','awful','terrible','dreadful','horrible','appalling','shocking','dire','grim','ghastly','hideous','atrocious','rubbish','useless','hopeless','pathetic','dire','abysmal','woeful','wretched','miserable','bleak','dismal'];
 
 // Sincerity intensifiers (signal genuine meaning)
 const sincerityMarkers = ['absolutely','genuinely','truly','honestly','actually','really','properly','dead','well','bloody','bloomin','flipping','blinking','ruddy','proper'];
@@ -1036,6 +1036,23 @@ function analyzeContext(cleaned, words) {
             pol: 78,
             tip: `"${d.charAt(0).toUpperCase() + d.slice(1)}" before a positive word is the British dimmer switch. It doesn't turn the lights down \u2014 it turns them off.`,
             score: 8
+          });
+        }
+      }
+    }
+  }
+
+  // Rule 1b: Dampener + negative word → much worse than stated
+  for (const d of dampeners) {
+    if (cleaned.includes(d)) {
+      for (const n of negativeWords) {
+        const regex = new RegExp(`\\b${d.replace(/\s+/g, '\\s+')}\\s+${n}\\b`);
+        if (regex.test(cleaned)) {
+          results.push({
+            t: `"${d.charAt(0).toUpperCase() + d.slice(1)} ${n}" is classic British understatement. They mean EXTREMELY ${n}. Disastrously ${n}. They're softening a harsh verdict to avoid sounding dramatic, but make no mistake \u2014 they think it's truly ${n}.`,
+            pol: 80,
+            tip: `"${d.charAt(0).toUpperCase() + d.slice(1)}" before a negative word doesn't reduce it \u2014 it confirms it while maintaining composure. The real feeling is much stronger.`,
+            score: 9
           });
         }
       }
@@ -1267,8 +1284,12 @@ function findTranslation(input) {
   const words = cleaned.split(/\s+/);
 
   // ── LAYER 1: Exact phrase matching (longest match wins) ──
+  // Use word boundary regex to avoid matching fragments inside other words
+  // e.g. "ha" must not match inside "that's"
   for (const { pattern, entry } of sortedPhrases) {
-    if (cleaned.includes(pattern)) {
+    const escaped = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(?:^|\\b|\\s)${escaped}(?:\\b|\\s|$)`);
+    if (regex.test(cleaned)) {
       return { translation: entry.t, politeness: entry.pol, tip: entry.tip };
     }
   }
