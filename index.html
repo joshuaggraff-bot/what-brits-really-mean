@@ -2222,7 +2222,7 @@ async function copyImageToClipboard(blob) {
   }
 }
 
-dropdown.addEventListener('click', async (e) => {
+dropdown.addEventListener('click', (e) => {
   const btn = e.target.closest('.sd-btn');
   if (!btn || !screenshotBlob) return;
 
@@ -2234,19 +2234,12 @@ dropdown.addEventListener('click', async (e) => {
     return;
   }
 
-  // Mobile: use Web Share API to share image directly
-  const file = new File([screenshotBlob], 'british-translation.png', { type: 'image/png' });
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    try {
-      await navigator.share({ files: [file], title: 'What Brits Really Mean', text: 'Check out this British translation!' });
-    } catch (e) { /* user cancelled */ }
-    return;
-  }
-
-  // Desktop: copy image to clipboard, download as backup, then open platform
-  const copied = await copyImageToClipboard(screenshotBlob);
-  downloadScreenshot();
+  // Open platform immediately (synchronous — won't be blocked by popup blocker)
   window.open(platformUrls[platform], '_blank', 'noopener');
+
+  // Then download image and copy to clipboard in background
+  downloadScreenshot();
+  copyImageToClipboard(screenshotBlob);
 });
 </script>
 
